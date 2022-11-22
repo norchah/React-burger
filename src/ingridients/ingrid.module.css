@@ -6,3 +6,16 @@
     height: 756px;
     overflow-y: scroll;
 }
+
+.list::-webkit-scrollbar {
+    margin-top: 40px;
+    width: 8px;
+    height: 664px;
+    background-color: #2F2F37;
+  }
+
+  .list::-webkit-scrollbar-thumb { /* 5 - ползунок */
+    /* border-radius: 2px; */
+    height: 492px;
+    background-color: #4C4CFF;
+  }

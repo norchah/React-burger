@@ -6,6 +6,7 @@ export default function Ingridients(props) {
   const bunProps = props.value.filter((item) => item.type === "bun");
   const sauceProps = props.value.filter((item) => item.type === "sauce");
   const mainProps = props.value.filter((item) => item.type === "main");
+  const titleStyle = {marginTop: '40px'}
 
   return (
     <ul className={ingrStyles.list}>
@@ -14,11 +15,11 @@ export default function Ingridients(props) {
         <Cards value={bunProps} />
       </li>
       <li>
-        <h2 className="text text_type_main-medium">Соусы</h2>
+        <h2 style={titleStyle} className="text text_type_main-medium">Соусы</h2>
         <Cards value={sauceProps} />
       </li>
       <li>
-        <h2 className="text text_type_main-medium">Начинки</h2>
+        <h2 style={titleStyle} className="text text_type_main-medium">Начинки</h2>
         <Cards value={mainProps} />
       </li>
     </ul>
