@@ -1,0 +1,8 @@
+.list {
+    padding: 0;
+    margin: 40px 0 0;
+    list-style: none;
+    width: 600px;
+    height: 756px;
+    overflow-y: scroll;
+}

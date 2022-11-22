@@ -1,0 +1,7 @@
+.button {
+    composes: button from "../header-constructor-button/button.module.css";
+    width: 197px;
+    height: 56px;
+    padding-left: 16px;
+}
+  
