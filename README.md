@@ -1,6 +1,6 @@
 # Новейшее приложение на React
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Этот проект создан при помощи [Create React App](https://github.com/facebook/create-react-app).
 
 ## Доступные скрипты
 
@@ -9,7 +9,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 ### `npm start`
 
 Запускает приложение в режиме разработчика.\
-Open [http://localhost:3000](http://localhost:3000) для просмотра в браузере.
+Откройте [http://localhost:3000](http://localhost:3000) для просмотра в браузере.
 
 Страница будет автоматически перезагружаться при изменениях.\
 Вы также увидите некоторые ошибки в консоли.
@@ -17,13 +17,13 @@ Open [http://localhost:3000](http://localhost:3000) для просмотра в
 ### `npm test`
 
 Не работает, я все удалил.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Узнать больще [running tests](https://facebook.github.io/create-react-app/docs/running-tests)
 
 ### `npm run build`
 
 Для сборк проекта и деплоя
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Узнать больше [deployment](https://facebook.github.io/create-react-app/docs/deployment)
 
 ### `npm run eject`
 
@@ -35,4 +35,4 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 
 Где-то здесь [Макет](https://www.figma.com/file/ocw9a6hNGeAejl4F3G9fp8/React-_-Проектные-задачи-(3-месяца)_external_link?node-id=724%3A350&t=Zjr6vVdEF8w2F10e-0).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Узнать больше о Реакт можно нажав на [React documentation](https://reactjs.org/).
