@@ -47,24 +47,25 @@ function getMiddleElement(item) {
 export default function ListElements(props) {
   return (
     <ul className={styles.list}>
-      {props.value.map((item, index) =>{
-        if (index === 0) {
-          return getFirstElement(item)
-        }
-      })}
-      <ul className={styles.listMiddle}>
       {props.value.map((item, index) => {
-        if (index !== 0 && index !== props.value.length - 1) {
-          return getMiddleElement(item);
+        if (index === 0) {
+          return getFirstElement(item);
         }
       })}
-      </ul>
-      {props.value.map((item, index) =>{
+      <li>
+        <ul className={styles.listMiddle}>
+          {props.value.map((item, index) => {
+            if (index !== 0 && index !== props.value.length - 1) {
+              return getMiddleElement(item);
+            }
+          })}
+        </ul>
+      </li>
+      {props.value.map((item, index) => {
         if (index === props.value.length - 1) {
-          return getLastElement(item)
+          return getLastElement(item);
         }
       })}
-      
     </ul>
   );
 }
