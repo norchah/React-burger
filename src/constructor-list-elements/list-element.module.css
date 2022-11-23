@@ -8,18 +8,24 @@
     padding: 0 16px 0;
 }
 
+.listMiddle {
+  composes: list;
+  padding: 0;
+  width: 103%;
+  height: 465px;
+  overflow-y: scroll;
+}
+
 
 /* измененный скролл-бар, но скролить нечего, так как пока нет переполнения в компоненте */
 
-.list::-webkit-scrollbar { 
-    margin-top: 40px;
+.listMiddle::-webkit-scrollbar { 
     width: 8px;
-    height: 664px;
     background-color: #2F2F37;
   }
 
-  .list::-webkit-scrollbar-thumb {
-    height: 492px;
+  .listMiddle::-webkit-scrollbar-thumb {
+    height: 292px;
     background-color: #4C4CFF;
   }
 
