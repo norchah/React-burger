@@ -17,13 +17,13 @@
 ### `npm test`
 
 Не работает, я все удалил.\
-Узнать больще [running tests](https://facebook.github.io/create-react-app/docs/running-tests)
+Узнать больше о [running tests](https://facebook.github.io/create-react-app/docs/running-tests)
 
 ### `npm run build`
 
 Для сборк проекта и деплоя
 
-Узнать больше [deployment](https://facebook.github.io/create-react-app/docs/deployment)
+Узнать больше о [deployment](https://facebook.github.io/create-react-app/docs/deployment)
 
 ### `npm run eject`
 
