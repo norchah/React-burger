@@ -1,5 +1,5 @@
 import React from "react";
-import { data } from "./utils/data";
+import { ingrid, elems } from "./utils/data";
 import Header from "./header/header.jsx";
 import Main from "./main/main.jsx";
 
@@ -7,7 +7,7 @@ function App() {
   return (
     <>
       <Header />
-      <Main data={data} />
+      <Main data={ingrid} elements={elems} />
     </>
   );
 }

@@ -5,8 +5,10 @@ import priceStyles from "./price.module.css";
 export default function Price(props) {
   return (
     <div className={priceStyles.price}>
-      <p className="text text_type_digits-default" style={{marginRight: '9px'}}>{props.children}</p>
-      <CurrencyIcon type="primary"></CurrencyIcon>
+      <p className={props.className} style={{ marginRight: "9px" }}>
+        {props.children}
+      </p>
+      <CurrencyIcon type={props.type}></CurrencyIcon>
     </div>
   );
 }

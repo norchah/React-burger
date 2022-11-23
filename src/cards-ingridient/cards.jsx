@@ -6,8 +6,8 @@ export default function Cards(props) {
   return (
     <ul className={cardsStyles.cards}>
       {props.value.map((item) => (
-        <li>
-          <Card value={item} key={item._id}/>
+        <li key={item._id}>
+          <Card value={item} />
         </li>
       ))}
     </ul>

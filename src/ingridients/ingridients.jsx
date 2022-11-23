@@ -10,15 +10,15 @@ export default function Ingridients(props) {
 
   return (
     <ul className={ingrStyles.list}>
-      <li>
+      <li key={1}>
         <h2 className="text text_type_main-medium">Булки</h2>
         <Cards value={bunProps} />
       </li>
-      <li>
+      <li key={2}>
         <h2 style={titleStyle} className="text text_type_main-medium">Соусы</h2>
         <Cards value={sauceProps} />
       </li>
-      <li>
+      <li key={3}>
         <h2 style={titleStyle} className="text text_type_main-medium">Начинки</h2>
         <Cards value={mainProps} />
       </li>

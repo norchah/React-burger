@@ -14,8 +14,7 @@
     background-color: #2F2F37;
   }
 
-  .list::-webkit-scrollbar-thumb { /* 5 - ползунок */
-    /* border-radius: 2px; */
+  .list::-webkit-scrollbar-thumb {
     height: 492px;
     background-color: #4C4CFF;
   }
