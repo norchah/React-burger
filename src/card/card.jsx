@@ -4,7 +4,6 @@ import { Counter } from "@ya.praktikum/react-developer-burger-ui-components";
 import cardStyles from "./card.module.css";
 
 export default function Card(props) {
-  console.log(props);
   return (
     <article className={`${cardStyles.card} pb-8`}>
       {props.value.state.isChoose && (
