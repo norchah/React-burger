@@ -1,7 +1,7 @@
 import React from "react";
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import totalStyles from "./total.module.css";
-import iconImagePath from "../images/icon-36x36.svg";
+import iconImagePath from "../../images/icon-36x36.svg";
 
 export default function Total() {
   return (

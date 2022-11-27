@@ -1,7 +1,7 @@
 import React from "react";
-import Nav from "../nav/nav";
+import Nav from "./nav/nav.jsx";
 import { Logo } from "@ya.praktikum/react-developer-burger-ui-components";
-import Account from "../header-account/header-account";
+import ButtonAccount from "./button-account/button-account.jsx";
 import styles from "./header.module.css";
 
 export default function Header() {
@@ -10,7 +10,7 @@ export default function Header() {
       <div className={`${styles.container} pt-16 pb-16`}>
         <Nav />
         <Logo />
-        <Account>Личный кабинет</Account>
+        <ButtonAccount>Личный кабинет</ButtonAccount>
       </div>
     </header>
   );

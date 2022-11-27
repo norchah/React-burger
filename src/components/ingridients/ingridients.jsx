@@ -1,5 +1,5 @@
 import React from "react";
-import Cards from "../cards-ingridient/cards";
+import Cards from "../cards-ingridient/cards.jsx";
 import ingrStyles from "./ingrid.module.css";
 
 export default function Ingridients(props) {

@@ -1,6 +1,6 @@
 import React from "react";
-import ButtonConstructor from "../header-constructor-button/header-constructor-button";
-import ButtonOrderList from "../header-order-list-button/header-order-list-button";
+import ButtonConstructor from "../button-constructor/button-constructor.jsx";
+import ButtonOrderList from "../button-order-list/button-orderr-list.jsx";
 import styles from "./nav.module.css";
 
 export default function Nav() {

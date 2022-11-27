@@ -1,4 +1,0 @@
-.button {
-    composes: button from '../header-constructor-button/button.module.css';
-    margin-left: 288px;
-}

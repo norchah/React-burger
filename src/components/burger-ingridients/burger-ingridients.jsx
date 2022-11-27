@@ -1,7 +1,7 @@
 import React from "react";
 import styles from './burger-ingridients.module.css';
 import Switcher from "../switcher/switcher";
-import Ingridients from "../ingridients/ingridients";
+import Ingridients from "../ingridients/ingridients.jsx";
 
 
 export default function BurgerIngridients(props) {
