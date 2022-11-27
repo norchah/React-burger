@@ -1,9 +1,9 @@
 .cards {
     padding: 0;
-    margin: 24px 0 0;
     list-style: none;
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-around;
-    row-gap: 32px;
+}
+.item:nth-of-type(2n) {
+    padding: 0;
 }

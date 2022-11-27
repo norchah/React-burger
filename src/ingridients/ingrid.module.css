@@ -1,20 +1,18 @@
 .list {
-    padding: 0;
-    margin: 40px 0 0;
-    list-style: none;
-    width: 600px;
-    height: 756px;
-    overflow-y: scroll;
+  padding: 0;
+  list-style: none;
+  width: 600px;
+  height: 756px;
+  overflow-y: scroll;
 }
 
 .list::-webkit-scrollbar {
-    margin-top: 40px;
-    width: 8px;
-    height: 664px;
-    background-color: #2F2F37;
-  }
+  margin-top: 40px;
+  width: 8px;
+  background-color: #2F2F37;
+}
 
-  .list::-webkit-scrollbar-thumb {
-    height: 492px;
-    background-color: #4C4CFF;
-  }
+.list::-webkit-scrollbar-thumb {
+  height: 492px;
+  background-color: #4C4CFF;
+}

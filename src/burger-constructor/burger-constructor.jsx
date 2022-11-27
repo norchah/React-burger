@@ -5,7 +5,7 @@ import Total from "../total/total";
 
 export default function BurgerConstructor(props) {
   return (
-    <section className={styles.section}>
+    <section className={`${styles.section} pt-25 pl-4 pr-4`}>
       <ListElements value={props.value} />
       <Total />
     </section>

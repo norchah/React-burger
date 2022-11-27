@@ -1,12 +1,16 @@
 .total {
-    margin: 40px 0 0 210px;
-    width: 375px;
     height: 64px;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    align-self: flex-end;
 }
 
 .totalPrice {
     display: flex;
+    align-items: center;
+}
+
+
+.image {
+    width: 33px;
+    height: 33px;
 }

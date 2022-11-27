@@ -2,5 +2,5 @@
     display: flex;
     justify-content: space-between;
     box-sizing: border-box;
-    margin: 4px 0;
+    height: 24px;
 }

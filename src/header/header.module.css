@@ -10,5 +10,7 @@
 .container {
     margin: 0 auto;
     display: flex;
-    width: 1280px;
+    align-items: center;
+    width: 1320px;
+    padding-left: -20px;
 }

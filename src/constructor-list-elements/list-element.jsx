@@ -46,7 +46,7 @@ function getMiddleElement(item) {
 
 export default function ListElements(props) {
   return (
-    <ul className={styles.list}>
+    <ul className={`${styles.list}`}>
       {props.value.map((item, index) => {
         if (index === 0) {
           return getFirstElement(item);

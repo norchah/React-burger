@@ -7,7 +7,7 @@ import styles from "./header.module.css";
 export default function Header() {
   return (
     <header className={styles.header}>
-      <div className={styles.container}>
+      <div className={`${styles.container} pt-16 pb-16`}>
         <Nav />
         <Logo />
         <Account>Личный кабинет</Account>
