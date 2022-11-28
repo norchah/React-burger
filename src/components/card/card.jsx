@@ -2,6 +2,9 @@ import React from "react";
 import Price from "../price/price";
 import { Counter } from "@ya.praktikum/react-developer-burger-ui-components";
 import cardStyles from "./card.module.css";
+import PropTypes from 'prop-types';
+import { messagePropTypes } from "../../utils/data.js";
+
 
 export default function Card(props) {
   return (
@@ -19,11 +22,14 @@ export default function Card(props) {
         {props.value.price}
       </Price>
       <p
-        style={{ textAlign: "center" }}
-        className="text text_type_main-default mt-2"
+        className={`${cardStyles.text} text text_type_main-default mt-2`}
       >
         {props.value.name}
       </p>
     </article>
   );
 }
+
+Card.propTypes = {
+  value: PropTypes.arrayOf(messagePropTypes).isRequired
+};

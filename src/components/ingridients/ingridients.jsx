@@ -1,6 +1,8 @@
 import React from "react";
 import Cards from "../cards-ingridient/cards.jsx";
 import ingrStyles from "./ingrid.module.css";
+import PropTypes from "prop-types";
+import { messagePropTypes } from "../../utils/data";
 
 export default function Ingridients(props) {
   const bunProps = props.value.filter((item) => item.type === "bun");
@@ -24,3 +26,7 @@ export default function Ingridients(props) {
     </ul>
   );
 }
+
+Ingridients.propTypes = {
+  value: PropTypes.arrayOf(messagePropTypes).isRequired
+};

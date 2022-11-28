@@ -2,6 +2,8 @@ import React from "react";
 import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
 import { DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./list-element.module.css";
+import PropTypes from "prop-types";
+import { messagePropTypes } from "../../utils/data";
 
 function getFirstElement(item) {
   return (
@@ -69,3 +71,7 @@ export default function ListElements(props) {
     </ul>
   );
 }
+
+ListElements.propTypes = {
+  value: PropTypes.arrayOf(messagePropTypes).isRequired
+};

@@ -1,6 +1,8 @@
 import React from "react";
 import Card from "../card/card.jsx";
 import cardsStyles from "./cards.module.css";
+import PropTypes from 'prop-types';
+import { messagePropTypes } from "../../utils/data.js";
 
 export default function Cards(props) {
   return (
@@ -13,3 +15,7 @@ export default function Cards(props) {
     </ul>
   );
 }
+
+Cards.propTypes = {
+  value: PropTypes.arrayOf(messagePropTypes).isRequired
+};

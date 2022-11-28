@@ -1,6 +1,8 @@
 import React from "react";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import priceStyles from "./price.module.css";
+import PropTypes from "prop-types";
+import { messagePropTypes } from "../../utils/data";
 
 export default function Price(props) {
   return (
@@ -11,3 +13,7 @@ export default function Price(props) {
     </div>
   );
 }
+
+Price.propTypes = {
+  value: PropTypes.arrayOf(messagePropTypes).isRequired
+};
