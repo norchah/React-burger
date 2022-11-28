@@ -15,5 +15,6 @@ export default function Main(props) {
 }
 
 Main.propTypes = {
-  value: PropTypes.arrayOf(messagePropTypes).isRequired
+  data: PropTypes.arrayOf(messagePropTypes).isRequired,
+  elements: PropTypes.arrayOf(messagePropTypes).isRequired
 };
