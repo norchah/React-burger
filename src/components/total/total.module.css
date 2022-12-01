@@ -1,0 +1,16 @@
+.total {
+    height: 64px;
+    display: flex;
+    align-self: flex-end;
+}
+
+.totalPrice {
+    display: flex;
+    align-items: center;
+}
+
+
+.image {
+    width: 33px;
+    height: 33px;
+}

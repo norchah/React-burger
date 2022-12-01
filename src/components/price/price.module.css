@@ -1,0 +1,6 @@
+.price {
+    display: flex;
+    justify-content: space-between;
+    box-sizing: border-box;
+    height: 24px;
+}

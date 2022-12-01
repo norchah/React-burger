@@ -1,0 +1,9 @@
+.button {
+    display: flex;
+    align-items: center;
+    height: 56px;
+    box-sizing: border-box;
+    border: none;
+    background-color: inherit;
+    color: inherit;
+}
