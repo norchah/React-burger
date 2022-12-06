@@ -5,12 +5,10 @@ import cardStyles from "./card.module.css";
 import PropTypes from "prop-types";
 
 export default function Card(props) {
+  console.log(props)
   return (
     <article className={`${cardStyles.card} pb-8`}>
-      {props.value.state.isChoose && (
-        <Counter count={1} size="default" extraClass="" />
-      )}
-
+      <Counter count={1} size="default" extraClass="" />
       <img
         className={cardStyles.image}
         src={props.value.image}
