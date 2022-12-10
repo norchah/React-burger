@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from 'prop-types'
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import totalStyles from "./total.module.css";
 import iconImagePath from "../../images/icon-36x36.svg";
@@ -19,4 +20,8 @@ export default function Total({open}) {
       </Button>
     </div>
   );
+}
+
+Total.propTypes = {
+  open: PropTypes.func.isRequired,
 }

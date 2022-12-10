@@ -28,5 +28,6 @@ export default function Ingridients({value, open}) {
 }
 
 Ingridients.propTypes = {
-  value: PropTypes.arrayOf(messagePropTypes).isRequired
+  value: PropTypes.arrayOf(messagePropTypes).isRequired,
+  open: PropTypes.func.isRequired,
 };

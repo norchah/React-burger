@@ -28,5 +28,6 @@ Card.propTypes = {
   value: PropTypes.shape({
     name: PropTypes.string.isRequired,
     image: PropTypes.string.isRequired,
-  }),
+  }).isRequired,
+  open: PropTypes.func.isRequired,
 };

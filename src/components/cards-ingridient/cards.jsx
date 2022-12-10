@@ -17,5 +17,6 @@ export default function Cards({value, open}) {
 }
 
 Cards.propTypes = {
-  value: PropTypes.arrayOf(messagePropTypes).isRequired
+  value: PropTypes.arrayOf(messagePropTypes).isRequired,
+  open: PropTypes.func.isRequired,
 };

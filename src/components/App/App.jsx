@@ -3,7 +3,9 @@ import stylesApp from "./app.module.css";
 import { elems } from "../../utils/data";
 import AppHeader from "../App-header/AppHeader.jsx";
 import Main from "../App-main/main.jsx";
-import ModalOverlay from "../modal-overlay/modal-overlay";
+import Modal from "../modal/modal";
+import IngredientDetails from "../modal-ingridient-details/ingridient-details";
+import OrderDetails from "../modal-order-details/order-details";
 
 function App() {
   const [state, setState] = useState({
@@ -16,10 +18,10 @@ function App() {
   });
 
   const handleEsc = (evt) => {
-    if (evt.key === 'Escape') {
+    if (evt.key === "Escape") {
       closeModal();
     }
-  }
+  };
 
   const openModal = (value) => {
     setState({
@@ -28,7 +30,7 @@ function App() {
       activeModalOrder: value ? false : true,
       ingridient: { value },
     });
-    document.addEventListener('keydown', handleEsc)
+    document.addEventListener("keydown", handleEsc);
   };
 
   const closeModal = () => {
@@ -38,7 +40,7 @@ function App() {
       activeModalOrder: false,
       ingridient: {},
     });
-    document.removeEventListener('keydown', handleEsc)
+    document.removeEventListener("keydown", handleEsc);
   };
 
   useEffect(() => {
@@ -72,11 +74,18 @@ function App() {
       {!isLoading && (
         <Main data={ingridientsData} elements={elems} open={openModal} />
       )}
-      <ModalOverlay
+      <Modal
         active={activeModalIngr ? activeModalIngr : activeModalOrder}
         close={closeModal}
-        value={ingridient.value}
-        data={numberOfOrder}
+        value={ingridient}
+        title={"Детали ингредиента"}
+        children={
+          ingridient.value ? (
+            <IngredientDetails ingrData={ingridient.value} />
+          ) : (
+            <OrderDetails data={numberOfOrder} />
+          )
+        }
       />
     </div>
   );

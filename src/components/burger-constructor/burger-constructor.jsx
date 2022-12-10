@@ -15,5 +15,6 @@ export default function BurgerConstructor({value, open}) {
 }
 
 BurgerConstructor.propTypes = {
-  value: PropTypes.arrayOf(messagePropTypes).isRequired
+  value: PropTypes.arrayOf(messagePropTypes).isRequired,
+  open: PropTypes.func.isRequired,
 };
