@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-//import { messagePropTypes } from "../../utils/data";
 import stylesDetails from "./details.module.css";
 
 export default function IngredientDetails({ ingrData }) {

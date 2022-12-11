@@ -11,36 +11,44 @@ function App() {
   const [state, setState] = useState({
     isLoading: false,
     ingridientsData: [],
+  });
+
+  const [modal, setModal] = useState({
     activeModalIngr: false,
     activeModalOrder: false,
     ingridient: {},
     numberOfOrder: "034536",
   });
 
-  const handleEsc = (evt) => {
-    if (evt.key === "Escape") {
-      closeModal();
-    }
-  };
-
-  const openModal = (value) => {
-    setState({
-      ...state,
-      activeModalIngr: value ? true : false,
-      activeModalOrder: value ? false : true,
+  const openModalIngr = (value) => {
+    setModal({
+      ...modal,
+      activeModalIngr: true,
       ingridient: { value },
     });
-    document.addEventListener("keydown", handleEsc);
+  };
+
+  const openModalOrder = () => {
+    setModal({
+      ...modal,
+      activeModalOrder: true,
+    });
   };
 
   const closeModal = () => {
-    setState({
-      ...state,
+    setModal({
+      ...modal,
       activeModalIngr: false,
       activeModalOrder: false,
       ingridient: {},
     });
-    document.removeEventListener("keydown", handleEsc);
+  };
+
+  const isEmpty = (obj) => {
+    for (let key in obj) {
+      return true;
+    }
+    return false;
   };
 
   useEffect(() => {
@@ -58,35 +66,35 @@ function App() {
       .catch((err) => console.log(err));
   }, []);
 
-  const {
-    ingridientsData,
-    isLoading,
-    ingridient,
-    activeModalIngr,
-    activeModalOrder,
-    numberOfOrder,
-  } = state;
+  const { ingridientsData, isLoading } = state;
+
+  const { ingridient, activeModalIngr, activeModalOrder, numberOfOrder } =
+    modal;
 
   return (
     <div className={stylesApp.app}>
       <AppHeader />
       {isLoading && "loading..."}
       {!isLoading && (
-        <Main data={ingridientsData} elements={elems} open={openModal} />
+        <Main
+          data={ingridientsData}
+          elements={elems}
+          openIngr={openModalIngr}
+          openOrder={openModalOrder}
+        />
       )}
       <Modal
-        active={activeModalIngr ? activeModalIngr : activeModalOrder}
+        active={activeModalIngr}
         close={closeModal}
-        value={ingridient}
         title={"Детали ингредиента"}
-        children={
-          ingridient.value ? (
-            <IngredientDetails ingrData={ingridient.value} />
-          ) : (
-            <OrderDetails data={numberOfOrder} />
-          )
-        }
-      />
+      >
+        {isEmpty(ingridient) && (
+          <IngredientDetails ingrData={ingridient.value} />
+        )}
+      </Modal>
+      <Modal active={activeModalOrder} close={closeModal}>
+        <OrderDetails data={numberOfOrder} />
+      </Modal>
     </div>
   );
 }

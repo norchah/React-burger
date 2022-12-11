@@ -6,18 +6,11 @@ import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import modalStyles from "./modal.module.css";
 import ModalOverlay from "../modal-overlay/modal-overlay";
 
-function isEmpty(value) {
-    if(value === undefined) {
-        return false;
-    }
-    return true;
-}
-
-export default function Modal({ active, close, value, title, children }) {
+export default function Modal(props) {
   useEffect(() => {
     const handleCloseByEsc = (e) => {
       if (e.key === "Escape") {
-        close();
+        props.close();
       }
     };
     document.addEventListener("keydown", handleCloseByEsc);
@@ -27,20 +20,20 @@ export default function Modal({ active, close, value, title, children }) {
   }, []);
 
   return createPortal(
-    <ModalOverlay active={active} close={close}>
+    <ModalOverlay active={props.active} close={props.close}>
       <section
         className={`${modalStyles.content} pl-10 pr-10 pt-10`}
         onClick={(e) => e.stopPropagation()}
       >
         <header className={modalStyles.modalHeader}>
           <h2 className={`${modalStyles.title} text text_type_main-large`}>
-            {isEmpty(value.value) ? title : ""}
+            {props.title}
           </h2>
-          <button className={modalStyles.button} onClick={() => close()}>
+          <button className={modalStyles.button} onClick={() => props.close()}>
             <CloseIcon type="primary" />
           </button>
         </header>
-        {children}
+        {props.children}
       </section>
     </ModalOverlay>,
     document.querySelector("#modal")
