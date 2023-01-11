@@ -1,22 +1,22 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo, useContext } from "react";
 import stylesApp from "./app.module.css";
-import { elems } from "../../utils/data";
 import AppHeader from "../App-header/AppHeader.jsx";
 import Main from "../App-main/main.jsx";
 import Modal from "../modal/modal";
-import IngredientDetails from "../modal-ingridient-details/ingridient-details";
+import IngredientDetails from "../modal-ingredient-details/ingridient-details";
 import OrderDetails from "../modal-order-details/order-details";
+import { BurgerContext } from "../../services/burger-context";
 
 function App() {
-  const [state, setState] = useState({
-    isLoading: false,
-    ingridientsData: [],
+  const [burgerState, setBurgerState] = useState({
+    isLoading: true,
+    ingredients: [],
   });
 
   const [modal, setModal] = useState({
     activeModalIngr: false,
     activeModalOrder: false,
-    ingridient: {},
+    ingredient: {},
     numberOfOrder: "034536",
   });
 
@@ -24,14 +24,40 @@ function App() {
     setModal({
       ...modal,
       activeModalIngr: true,
-      ingridient: { value },
+      ingredient: { value },
     });
   };
 
-  const openModalOrder = () => {
-    setModal({
-      ...modal,
-      activeModalOrder: true,
+  const openModalOrder = (ingredients) => {
+    fetch('https://norma.nomoreparties.space/api/orders', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        'ingredients': ingredients
+      })
+    })
+    .then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+      return Promise.reject(`Err ${res.status}`);
+    })
+    .then((data) => {
+      setModal({
+        ...modal,
+        numberOfOrder: data.order.number,
+        activeModalOrder: true,
+      });
+    })
+    .catch((err) => {
+      console.log(err)
+      setModal({
+        ...modal,
+        numberOfOrder: 'error',
+        activeModalOrder: true,
+      })
     });
   };
 
@@ -40,7 +66,7 @@ function App() {
       ...modal,
       activeModalIngr: false,
       activeModalOrder: false,
-      ingridient: {},
+      ingredient: {},
     });
   };
 
@@ -52,7 +78,7 @@ function App() {
   };
 
   useEffect(() => {
-    setState({ ...state, isLoading: true });
+    setBurgerState({ isLoading: true });
     fetch("https://norma.nomoreparties.space/api/ingredients")
       .then((res) => {
         if (res.ok) {
@@ -61,35 +87,41 @@ function App() {
         return Promise.reject(`Err ${res.status}`);
       })
       .then((data) => {
-        setState({ ...state, isLoading: false, ingridientsData: data.data });
+        setBurgerState({ isLoading: false, ingredients: data.data });
       })
       .catch((err) => console.log(err));
   }, []);
 
-  const { ingridientsData, isLoading } = state;
+  const { ingredients, isLoading } = burgerState;
 
-  const { ingridient, activeModalIngr, activeModalOrder, numberOfOrder } =
+  const main = useMemo(() => {
+    return isLoading ? (
+      "loading"
+    ) : (
+      <Main openIngr={openModalIngr} openOrder={openModalOrder} />
+    );
+  }, [isLoading, ingredients]);
+
+  const { ingredient, activeModalIngr, activeModalOrder, numberOfOrder } =
     modal;
 
   return (
     <div className={stylesApp.app}>
       <AppHeader />
+
       {isLoading && "loading..."}
       {!isLoading && (
-        <Main
-          data={ingridientsData}
-          elements={elems}
-          openIngr={openModalIngr}
-          openOrder={openModalOrder}
-        />
+        <BurgerContext.Provider value={{ burgerState, setBurgerState }}>
+          {main}
+        </BurgerContext.Provider>
       )}
       <Modal
         active={activeModalIngr}
         close={closeModal}
         title={"Детали ингредиента"}
       >
-        {isEmpty(ingridient) && (
-          <IngredientDetails ingrData={ingridient.value} />
+        {isEmpty(ingredient) && (
+          <IngredientDetails ingrData={ingredient.value} />
         )}
       </Modal>
       <Modal active={activeModalOrder} close={closeModal}>
