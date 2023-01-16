@@ -1,17 +1,22 @@
-import React, { useContext } from "react";
-import PropTypes from "prop-types";
+import React from "react";
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import totalStyles from "./total.module.css";
 import iconImagePath from "../../images/icon-36x36.svg";
-import { OrderContext } from "../../services/order-context";
+import { useSelector, useDispatch } from 'react-redux';
+import { getNumberOfOrder } from "../../services/actions/modal";
 
-export default function Total({ open }) {
-  const { order } = useContext(OrderContext);
-  const {ingredientsId} = order
+export default function Total() {
+  const dispatch = useDispatch();
+  const { list, total } = useSelector(store=> ({
+    list: store.modal.itemsList,
+    total: store.modal.total,
+    })
+  );
+
   return (
     <div className={`${totalStyles.total} mt-10`}>
       <div className={totalStyles.totalPrice}>
-        <p className="text text_type_digits-medium mr-3">{order.totalPrice}</p>
+        <p className="text text_type_digits-medium mr-3">{total}</p>
         <img
           src={iconImagePath}
           alt="CurrencyIcon"
@@ -22,14 +27,12 @@ export default function Total({ open }) {
         htmlType="button"
         type="primary"
         size="large"
-        onClick={() => open(ingredientsId)}
+        onClick={() => {
+          dispatch(getNumberOfOrder(list));
+        }}
       >
         Оформить заказ
       </Button>
     </div>
   );
 }
-
-Total.propTypes = {
-  open: PropTypes.func.isRequired,
-};

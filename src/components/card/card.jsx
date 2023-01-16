@@ -1,16 +1,22 @@
 import React from "react";
 import Price from "../price/price";
-import { Counter } from "@ya.praktikum/react-developer-burger-ui-components";
+import { ConstructorElement, Counter } from "@ya.praktikum/react-developer-burger-ui-components";
 import cardStyles from "./card.module.css";
 import PropTypes from "prop-types";
+import { useDispatch } from 'react-redux';
+import { OPEN_MODAL_INGR } from "../../services/actions/modal.js";
 
-export default function Card({ value, open }) {
+export default function Card({ value }) {
+  const dispatch = useDispatch();
   return (
     <button className={cardStyles.button}>
       <article
         className={`${cardStyles.card} pb-8`}
         onClick={() => {
-          open(value);
+          dispatch({
+            type: OPEN_MODAL_INGR,
+            item: value,
+          })
         }}
       >
         <Counter count={1} size="default" extraClass="" />
@@ -22,12 +28,11 @@ export default function Card({ value, open }) {
       </article>
     </button>
   );
-}
+};
 
 Card.propTypes = {
   value: PropTypes.shape({
     name: PropTypes.string.isRequired,
     image: PropTypes.string.isRequired,
   }).isRequired,
-  open: PropTypes.func.isRequired,
 };

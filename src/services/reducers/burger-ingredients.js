@@ -1,4 +1,3 @@
-import { isTemplateSpan } from "typescript";
 import {
   GET_ITEM_REQUEST,
   GET_ITEM_SUCCESS,

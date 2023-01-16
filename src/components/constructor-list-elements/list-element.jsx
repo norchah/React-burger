@@ -1,30 +1,31 @@
-import React, { useContext, useEffect } from "react";
+import React, { useEffect } from "react";
 import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
 import { DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./list-element.module.css";
-import { BurgerContext } from "../../services/burger-context";
-import { OrderContext } from "../../services/order-context";
+import { useSelector, useDispatch } from "react-redux";
+import { ADD_ITEMS_LIST_FROM_CONSTRUCTOR } from "../../services/actions/modal";
 
 export default function ListElements() {
-  const { burgerState } = useContext(BurgerContext);
-  const { ingredients } = burgerState;
-  const firstBun = ingredients.find((item) => item.type === "bun");
-  const { setOrder } = useContext(OrderContext);
+  const dispatch = useDispatch();
+  const items = useSelector((store) => store.start.ingredients);
+
+  const firstBun = items.find((item) => item.type === "bun");
 
   useEffect(() => {
     let total = firstBun.price * 2;
     let ingredientsIdTemp = [firstBun._id];
-    ingredients.map((item) => {
+    items.map((item) => {
       if (item.type !== "bun") {
         total += item.price;
-        ingredientsIdTemp.push(item._id)
+        ingredientsIdTemp.push(item._id);
       }
-      setOrder({
-        ingredientsId: ingredientsIdTemp,
-        totalPrice: total,
-      });
     });
-  }, [ingredients, setOrder]);
+    dispatch({
+      type: ADD_ITEMS_LIST_FROM_CONSTRUCTOR,
+      itemsList: ingredientsIdTemp,
+      total: total,
+    });
+  }, [items, dispatch]);
 
   function getFirstElement(item) {
     return (
@@ -72,7 +73,7 @@ export default function ListElements() {
       {getFirstElement(firstBun)}
       <li>
         <ul className={styles.listMiddle}>
-          {ingredients.map((item) => {
+          {items.map((item) => {
             if (item.type !== "bun") {
               return getMiddleElement(item);
             }
@@ -83,7 +84,3 @@ export default function ListElements() {
     </ul>
   );
 }
-
-// ListElements.propTypes = {
-//   value: PropTypes.arrayOf(messagePropTypes).isRequired
-// };
