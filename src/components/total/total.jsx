@@ -8,8 +8,8 @@ import { getNumberOfOrder } from "../../services/actions/modal";
 export default function Total() {
   const dispatch = useDispatch();
   const { list, total } = useSelector(store=> ({
-    list: store.modal.itemsList,
-    total: store.modal.total,
+    list: store.order.idsList,
+    total: store.order.totalPrice,
     })
   );
 

@@ -12,7 +12,6 @@ export function getNumberOfOrder(ingredientsList) {
     dispatch({
       type: GET_NUMBER_REQUEST,
     });
-    console.log(ingredientsList);
     fetch("https://norma.nomoreparties.space/api/orders", {
       method: "POST",
       headers: {

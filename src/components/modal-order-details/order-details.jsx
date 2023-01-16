@@ -1,10 +1,9 @@
 import React from "react";
-import PropTypes from "prop-types";
 import stylesOrder from "./order.module.css";
 import done from "../../images/done.jpg";
 import { useSelector } from 'react-redux';
 
-export default function OrderDetails({ data }) {
+export default function OrderDetails() {
   const { numberOfOrder, error } = useSelector(store => ({
     numberOfOrder: store.modal.numberOfOrder,
     error: store.modal.numberError,
@@ -25,7 +24,3 @@ export default function OrderDetails({ data }) {
     </main>
   );
 }
-
-OrderDetails.protoTypes = {
-  data: PropTypes.string.isRequired,
-};
