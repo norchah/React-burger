@@ -1,17 +1,16 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import totalStyles from "./total.module.css";
 import iconImagePath from "../../images/icon-36x36.svg";
-import { useSelector, useDispatch } from 'react-redux';
-import { getNumberOfOrder } from "../../services/actions/modal";
+import { useSelector, useDispatch } from "react-redux";
+import { getNumberOfOrder } from "../../services/actions/burger-ingredients";
 
 export default function Total() {
   const dispatch = useDispatch();
-  const { list, total } = useSelector(store=> ({
-    list: store.order.idsList,
-    total: store.order.totalPrice,
-    })
-  );
+  const { total, orderList } = useSelector((store) => ({
+    total: store.start.totalPrice,
+    orderList: store.start.orderList,
+  }));
 
   return (
     <div className={`${totalStyles.total} mt-10`}>
@@ -28,7 +27,7 @@ export default function Total() {
         type="primary"
         size="large"
         onClick={() => {
-          dispatch(getNumberOfOrder(list));
+          dispatch(getNumberOfOrder(orderList));
         }}
       >
         Оформить заказ

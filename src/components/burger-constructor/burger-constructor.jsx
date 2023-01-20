@@ -8,12 +8,10 @@ import { isEmpty } from "../../utils/data";
 export default function BurgerConstructor() {
   const { items, isLoading } = useSelector((store) => ({
     items: store.start.ingredients,
-    isLoading: store.start.isLoading,
   }));
-
   return (
     <section className={`${styles.section} pt-25 pl-4 pr-4`}>
-      {isEmpty(items) ? <ListElements /> : "loading..."}
+       {isEmpty(items)?  <ListElements /> : 'loading...'} 
       <Total />
     </section>
   );

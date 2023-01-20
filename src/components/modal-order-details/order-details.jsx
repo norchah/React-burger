@@ -1,12 +1,12 @@
 import React from "react";
 import stylesOrder from "./order.module.css";
 import done from "../../images/done.jpg";
-import { useSelector } from 'react-redux';
+import { useSelector } from "react-redux";
 
 export default function OrderDetails() {
-  const { numberOfOrder, error } = useSelector(store => ({
-    numberOfOrder: store.modal.numberOfOrder,
-    error: store.modal.numberError,
+  const { numberOfOrder, error } = useSelector((store) => ({
+    numberOfOrder: store.start.numberOfOrder,
+    error: store.start.numberError,
   }));
   return (
     <main className={stylesOrder.container}>

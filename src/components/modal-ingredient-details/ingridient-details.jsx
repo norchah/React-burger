@@ -1,13 +1,17 @@
 import React from "react";
 import stylesDetails from "./details.module.css";
-import {useSelector} from 'react-redux';
+import { useSelector } from "react-redux";
 
 export default function IngredientDetails() {
-  const data = useSelector(store=> store.modal.item)
+  const data = useSelector((store) => store.start.details);
 
   return (
     <main className={stylesDetails.container}>
-      <img src={data.image_large} alt={data.name} className={stylesDetails.image} />
+      <img
+        src={data.image_large}
+        alt={data.name}
+        className={stylesDetails.image}
+      />
       <h2
         className={`${stylesDetails.title} text text_type_main-medium mt-4 mb-8`}
       >

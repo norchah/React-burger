@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from 'prop-types';
 import modalStyles from "./modal.module.css";
 import { useDispatch } from 'react-redux';
-import { CLOSE_MODAL } from "../../services/actions/modal";
+import { CLOSE_MODAL } from "../../services/actions/burger-ingredients";
 
 const ModalOverlay = ({ active, children }) => {
   const dispatch = useDispatch();
@@ -18,7 +18,6 @@ const ModalOverlay = ({ active, children }) => {
           type: CLOSE_MODAL
         })
       }}
-      onKeyPress={(key) => console.log(key)}
     >
       {children}
     </div>

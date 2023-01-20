@@ -6,7 +6,7 @@ import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import modalStyles from "./modal.module.css";
 import ModalOverlay from "../modal-overlay/modal-overlay";
 import { useDispatch } from "react-redux";
-import { CLOSE_MODAL } from "../../services/actions/modal";
+import { CLOSE_MODAL } from "../../services/actions/burger-ingredients";
 
 export default function Modal(props) {
   const dispatch = useDispatch();
