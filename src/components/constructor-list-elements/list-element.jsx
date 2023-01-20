@@ -18,9 +18,10 @@ import { v4 as uuid } from "uuid";
 
 export default function ListElements() {
   const dispatch = useDispatch();
-  const { bun, constructor } = useSelector((store) => ({
+  const { bun, constructor, orderList } = useSelector((store) => ({
     bun: store.start.bun,
     constructor: store.start.constructor,
+    orderList: store.start.orderList,
   }));
 
   const [{ isHover }, dropRef] = useDrop({
@@ -78,7 +79,7 @@ export default function ListElements() {
 
   useEffect(() => {
     let total = bun[0].price * 2;
-    let ingredientsIdTemp = [bun._id];
+    let ingredientsIdTemp = [bun[0]._id];
     constructor.map((item) => {
       total += item.price;
       ingredientsIdTemp.push(item._id);

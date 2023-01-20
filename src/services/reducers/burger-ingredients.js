@@ -102,10 +102,17 @@ export function burgerIngredientsReducer(state = initialState, action) {
           1
         ),
       ];
+      const deleteFromOrder = [
+        ...state.orderList.splice(
+          [...state.constructor].findIndex((item) => item._id === action._id),
+          1
+        ),
+      ];
       return {
         ...state,
         arrWithoutEl,
         totalPrice: state.totalPrice - arrWithoutEl[0].price,
+        deleteFromOrder,
       };
     case ADD_BUN:
       return {
@@ -163,6 +170,7 @@ export function burgerIngredientsReducer(state = initialState, action) {
         numberSucces: false,
         numberFailed: true,
         numberError: action.error,
+        orderList: [],
       };
     case ADD_TOTAL:
       return {
@@ -176,12 +184,12 @@ export function burgerIngredientsReducer(state = initialState, action) {
         currentTab: action.current,
       };
     case MOVE_ITEM:
-      const arr = [...state.constructor]
+      const arr = [...state.constructor];
       const dragElement = arr[action.drag];
       const hoverElement = arr[action.hover];
       arr.splice(action.hover, 1, dragElement);
       arr.splice(action.drag, 1, hoverElement);
-      
+
       return {
         ...state,
         constructor: arr,
