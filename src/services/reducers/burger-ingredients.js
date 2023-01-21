@@ -152,6 +152,7 @@ export function burgerIngredientsReducer(state = initialState, action) {
         numberRequest: true,
         numberFailed: false,
         numberSucces: false,
+        numberOfOrder: null,
       };
     case GET_NUMBER_SUCCESS:
       return {
