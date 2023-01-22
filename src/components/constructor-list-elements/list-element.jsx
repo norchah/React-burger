@@ -25,7 +25,7 @@ export default function ListElements() {
   }));
 
   const [{ isHover }, dropRef] = useDrop({
-    //вставляются не булки
+    //не булки
     accept: "main" || "sauce",
     collect: (monitor) => ({
       isHover: monitor.isOver(),
@@ -36,7 +36,7 @@ export default function ListElements() {
   });
 
   const [{ isHoverBun }, dropBunRef] = useDrop({
-    //вставляются булки
+    //булки
     accept: "bun",
     collect: (monitor) => ({
       isHoverBun: monitor.isOver(),
