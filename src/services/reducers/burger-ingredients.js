@@ -152,7 +152,7 @@ export function burgerIngredientsReducer(state = initialState, action) {
         numberRequest: true,
         numberFailed: false,
         numberSucces: false,
-        numberOfOrder: null,
+        numberOfOrder: null, //тут очищал
       };
     case GET_NUMBER_SUCCESS:
       return {
@@ -172,6 +172,7 @@ export function burgerIngredientsReducer(state = initialState, action) {
         numberFailed: true,
         numberError: action.error,
         orderList: [],
+        numberOfOrder: action.error, // на предыдущей иттерации я очищал номер заказа при запросе
       };
     case ADD_TOTAL:
       return {
