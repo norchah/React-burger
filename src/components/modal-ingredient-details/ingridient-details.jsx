@@ -1,12 +1,17 @@
 import React from "react";
-import PropTypes from "prop-types";
 import stylesDetails from "./details.module.css";
+import { useSelector } from "react-redux";
 
-export default function IngredientDetails({ ingrData }) {
-  const data = ingrData;
+export default function IngredientDetails() {
+  const data = useSelector((store) => store.start.details);
+
   return (
     <main className={stylesDetails.container}>
-      <img src={data.image_large} alt={data.name} className={stylesDetails.image} />
+      <img
+        src={data.image_large}
+        alt={data.name}
+        className={stylesDetails.image}
+      />
       <h2
         className={`${stylesDetails.title} text text_type_main-medium mt-4 mb-8`}
       >
@@ -57,20 +62,3 @@ export default function IngredientDetails({ ingrData }) {
     </main>
   );
 }
-
-IngredientDetails.propTypes = {  //так и не понял почему при использовании переменной появляется ошибка
-  ingrData: PropTypes.shape({
-    _id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    type: PropTypes.string.isRequired,
-    proteins: PropTypes.number.isRequired,
-    fat: PropTypes.number.isRequired,
-    carbohydrates: PropTypes.number.isRequired,
-    calories: PropTypes.number.isRequired,
-    price: PropTypes.number.isRequired,
-    image: PropTypes.string.isRequired,
-    image_mobile: PropTypes.string.isRequired,
-    image_large: PropTypes.string.isRequired,
-    __v: PropTypes.number.isRequired,
-  }).isRequired,
-};

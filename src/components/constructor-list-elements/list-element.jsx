@@ -1,89 +1,116 @@
-import React, { useContext, useEffect } from "react";
-import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
-import { DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+import React, { useEffect } from "react";
 import styles from "./list-element.module.css";
-import { BurgerContext } from "../../services/burger-context";
-import { OrderContext } from "../../services/order-context";
+import FirstElement from "../elements/first-element";
+import LastElement from "../elements/last-element";
+import { MiddleElements } from "../elements/middle-elements";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  ADD_INGREDIENT,
+  INCREASE_ITEM,
+  ADD_BUN,
+  DEL_BUNS,
+  CLEAR_BUN_COUNT,
+  ADD_TOTAL,
+} from "../../services/actions/burger-ingredients";
+import { isEmpty } from "../../utils/data";
+import { useDrop } from "react-dnd";
+import { v4 as uuid } from "uuid";
 
 export default function ListElements() {
-  const { burgerState } = useContext(BurgerContext);
-  const { ingredients } = burgerState;
-  const firstBun = ingredients.find((item) => item.type === "bun");
-  const { setOrder } = useContext(OrderContext);
+  const dispatch = useDispatch();
+  const { bun, constructor, orderList } = useSelector((store) => ({
+    bun: store.start.bun,
+    constructor: store.start.constructor,
+    orderList: store.start.orderList,
+  }));
+
+  const [{ isHover }, dropRef] = useDrop({
+    //не булки
+    accept: "main" || "sauce",
+    collect: (monitor) => ({
+      isHover: monitor.isOver(),
+    }),
+    drop(itemId) {
+      onDropHandler(itemId);
+    },
+  });
+
+  const [{ isHoverBun }, dropBunRef] = useDrop({
+    //булки
+    accept: "bun",
+    collect: (monitor) => ({
+      isHoverBun: monitor.isOver(),
+    }),
+    drop(itemId) {
+      onDropHandlerBun(itemId);
+    },
+  });
+
+  const borderColor = isHover ? "blue" : "transparent";
+  const borderColorBun = isHoverBun ? "blue" : "transparent";
+
+  function onDropHandlerBun(item) {
+    dispatch({
+      type: DEL_BUNS,
+    });
+    dispatch({
+      type: ADD_BUN,
+      ...item,
+    });
+    dispatch({
+      type: CLEAR_BUN_COUNT,
+    });
+    dispatch({
+      type: INCREASE_ITEM,
+      ...item,
+    });
+  }
+
+  function onDropHandler(item) {
+    dispatch({
+      type: ADD_INGREDIENT,
+      ...item,
+    });
+    dispatch({
+      type: INCREASE_ITEM,
+      ...item,
+    });
+  }
 
   useEffect(() => {
-    let total = firstBun.price * 2;
-    let ingredientsIdTemp = [firstBun._id];
-    ingredients.map((item) => {
-      if (item.type !== "bun") {
-        total += item.price;
-        ingredientsIdTemp.push(item._id)
-      }
-      setOrder({
-        ingredientsId: ingredientsIdTemp,
-        totalPrice: total,
-      });
+    let total = bun[0].price * 2;
+    let ingredientsIdTemp = [bun[0]._id];
+    constructor.map((item) => {
+      total += item.price;
+      ingredientsIdTemp.push(item._id);
     });
-  }, [ingredients, setOrder]);
-
-  function getFirstElement(item) {
-    return (
-      <li key={item._id} className={styles.item}>
-        <ConstructorElement
-          type="top"
-          isLocked={true}
-          text={`${item.name} (верх)`}
-          price={item.price}
-          thumbnail={item.image}
-        />
-      </li>
-    );
-  }
-
-  function getLastElement(item) {
-    return (
-      <li key={item._id + "d"} className={styles.item}>
-        <ConstructorElement
-          type="bottom"
-          isLocked={true}
-          text={`${item.name} (низ)`}
-          price={item.price}
-          thumbnail={item.image}
-        />
-      </li>
-    );
-  }
-
-  function getMiddleElement(item) {
-    return (
-      <li key={item._id} className={styles.itemMiddle}>
-        <DragIcon type="primary" />
-        <ConstructorElement
-          text={item.name}
-          price={item.price}
-          thumbnail={item.image}
-        />
-      </li>
-    );
-  }
+    dispatch({
+      type: ADD_TOTAL,
+      orderList: ingredientsIdTemp,
+      totalPrice: total,
+    });
+  }, [constructor, bun, dispatch]);
 
   return (
-    <ul className={`${styles.list}`}>
-      {getFirstElement(firstBun)}
-      <li>
+    <ul
+      className={`${styles.list}`}
+      ref={dropBunRef}
+      style={{ outline: `1px solid ${borderColorBun}` }}
+    >
+      <FirstElement value={bun} />
+      <li ref={dropRef} style={{ border: `1px solid ${borderColor}` }}>
         <ul className={styles.listMiddle}>
-          {ingredients.map((item) => {
-            if (item.type !== "bun") {
-              return getMiddleElement(item);
-            }
-          })}
+          {isEmpty(constructor) &&
+            constructor.map((item, index) => {
+              if (item.type !== "bun") {
+                return (
+                  <MiddleElements key={uuid()} item={item} index={index} />
+                );
+              }
+            })}
         </ul>
       </li>
-      {getLastElement(firstBun)}
+      <LastElement value={bun} />
     </ul>
   );
 }
-
-// ListElements.propTypes = {
-//   value: PropTypes.arrayOf(messagePropTypes).isRequired
-// };

@@ -1,8 +1,11 @@
 import React from "react";
 import PropTypes from 'prop-types';
 import modalStyles from "./modal.module.css";
+import { useDispatch } from 'react-redux';
+import { CLOSE_MODAL } from "../../services/actions/burger-ingredients";
 
-const ModalOverlay = ({ active, close, children }) => {
+const ModalOverlay = ({ active, children }) => {
+  const dispatch = useDispatch();
   return (
     <div
       className={
@@ -11,9 +14,10 @@ const ModalOverlay = ({ active, close, children }) => {
           : `${modalStyles.modal}`
       }
       onClick={() => {
-        close();
+        dispatch({
+          type: CLOSE_MODAL
+        })
       }}
-      onKeyPress={(key) => console.log(key)}
     >
       {children}
     </div>
@@ -22,7 +26,6 @@ const ModalOverlay = ({ active, close, children }) => {
 
 ModalOverlay.propTypes = {
   active: PropTypes.bool.isRequired,
-  close: PropTypes.func.isRequired,
   children: PropTypes.element.isRequired
 }
 

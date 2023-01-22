@@ -1,13 +1,17 @@
 import React from "react";
-import PropTypes from "prop-types";
 import stylesOrder from "./order.module.css";
 import done from "../../images/done.jpg";
+import { useSelector } from "react-redux";
 
-export default function OrderDetails({ data }) {
+export default function OrderDetails() {
+  const { numberOfOrder, error } = useSelector((store) => ({
+    numberOfOrder: store.start.numberOfOrder,
+    error: store.start.numberError,
+  }));
   return (
     <main className={stylesOrder.container}>
       <h2 className={`${stylesOrder.shadow} text text_type_digits-large`}>
-        {data}
+        {numberOfOrder ? numberOfOrder : error}
       </h2>
       <p className="text text_type_main-medium mt-8">идентификатор заказа</p>
       <img className="mt-15" src={done}></img>
@@ -20,7 +24,3 @@ export default function OrderDetails({ data }) {
     </main>
   );
 }
-
-OrderDetails.protoTypes = {
-  data: PropTypes.string.isRequired,
-};

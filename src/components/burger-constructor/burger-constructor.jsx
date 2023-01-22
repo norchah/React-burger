@@ -1,26 +1,18 @@
-import React, {useState} from "react";
-import PropTypes from "prop-types";
+import React from "react";
 import ListElements from "../constructor-list-elements/list-element";
 import styles from "./burger-constructor.module.css";
 import Total from "../total/total.jsx";
-import { OrderContext } from "../../services/order-context";
+import { useSelector } from "react-redux";
+import { isEmpty } from "../../utils/data";
 
-export default function BurgerConstructor({ open }) {
-  const [order, setOrder] = useState({
-    totalPrice: 0,
-    ingredientsId: [],
-  })
-
+export default function BurgerConstructor() {
+  const { items, isLoading } = useSelector((store) => ({
+    items: store.start.ingredients,
+  }));
   return (
     <section className={`${styles.section} pt-25 pl-4 pr-4`}>
-      <OrderContext.Provider value={{ order, setOrder }}>
-        <ListElements />
-        <Total open={open} />
-      </OrderContext.Provider>
+       {isEmpty(items)?  <ListElements /> : 'loading...'} 
+      <Total />
     </section>
   );
 }
-
-BurgerConstructor.propTypes = {
-  open: PropTypes.func.isRequired,
-};
