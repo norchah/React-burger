@@ -6,14 +6,11 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDispatch } from "react-redux";
 import { useDrag, useDrop } from "react-dnd";
-import {
-  DEL_INGREDIENT,
-  DECREASE_ITEM,
-  MOVE_ITEM,
-} from "../../services/actions/burger-ingredients";
+import { burgerConstructorActions } from "../../services/slices/constructor-slice";
+import { ingredientsActions } from "../../services/slices/ingredients-slice";
 import { v4 as uuid } from "uuid";
 
-export function MiddleElements({ item, index, }) {
+export function MiddleElements({ item, index }) {
   const dispatch = useDispatch();
   const { _id } = item;
   const ref = useRef(null);
@@ -26,9 +23,7 @@ export function MiddleElements({ item, index, }) {
     }),
   });
 
-  // const borderColor = borderColor ? "1px solid blue" : "transparent";
-
-  const [itemic, dropRef] = useDrop({
+  const [_, dropRef] = useDrop({
     accept: "sauce" || "main",
     hover: (item, monitor) => {
       if (!ref.current) {
@@ -47,25 +42,20 @@ export function MiddleElements({ item, index, }) {
       if (dragIndex < hoverIndex && hoverActyalY < hoverMiddleY) return;
       if (dragIndex > hoverIndex && hoverActyalY > hoverMiddleY) return;
 
-      dispatch({
-        type: MOVE_ITEM,
-        drag: dragIndex,
-        hover: hoverIndex,
-      });
+      dispatch(
+        burgerConstructorActions.moveIngredient({
+          drag: dragIndex,
+          hover: hoverIndex,
+        })
+      );
       item.index = hoverIndex;
     },
   });
 
-  function handleClose(e) {
+  function handleDelete(e) {
     const target = e.currentTarget.closest("li");
-    dispatch({
-      type: DEL_INGREDIENT,
-      _id: target.id,
-    });
-    dispatch({
-      type: DECREASE_ITEM,
-      _id: target.id,
-    });
+    dispatch(ingredientsActions.decreaseItem(target.id));
+    dispatch(burgerConstructorActions.delIngredient(target.id));
   }
 
   const dragDropRef = dragRef(dropRef(ref));
@@ -76,14 +66,14 @@ export function MiddleElements({ item, index, }) {
       id={item._id}
       key={uuid()}
       className={styles.itemMiddle}
-      style={{ opacity: opacity /*border: borderColor*/ }}
+      style={{ opacity: opacity }}
     >
       <DragIcon type="primary" />
       <ConstructorElement
         text={item.name}
         price={item.price}
         thumbnail={item.image}
-        handleClose={handleClose}
+        handleClose={handleDelete}
       />
     </li>
   );

@@ -6,8 +6,8 @@ import { useSelector } from "react-redux";
 import { isEmpty } from "../../utils/data";
 
 export default function BurgerConstructor() {
-  const { items, isLoading } = useSelector((store) => ({
-    items: store.start.ingredients,
+  const { items } = useSelector((store) => ({
+    items: store.ingredients.ingredients,
   }));
   return (
     <section className={`${styles.section} pt-25 pl-4 pr-4`}>

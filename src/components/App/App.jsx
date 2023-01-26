@@ -7,25 +7,24 @@ import IngredientDetails from "../modal-ingredient-details/ingridient-details";
 import OrderDetails from "../modal-order-details/order-details";
 import { isEmpty } from "../../utils/data.js";
 import { useSelector, useDispatch } from "react-redux";
-import { getIngredients } from "../../services/actions/burger-ingredients.js";
+import { getIngredients } from "../../services/slices/api/get-ingredients";
+import { burgerConstructorActions } from "../../services/slices/constructor-slice";
 
 function App() {
   const dispatch = useDispatch();
 
-  const {
-    ingredients,
-    activeModalIngr,
-    activeModalOrder,
-    details,
-    numberOfOrder,
-    isLoading,
-  } = useSelector((store) => ({
-    activeModalIngr: store.start.activeModalIngr,
-    activeModalOrder: store.start.activeModalOrder,
-    details: store.start.details,
-    numberOfOrder: store.start.numberOfOrder,
-    isLoading: store.start.isLoading,
-    ingredients: store.start.ingredients,
+  const { status, data } = useSelector((store) => ({
+    status: store.ingredients.status,
+    data: store.ingredients.ingredients,
+  }));
+
+  const { ingredientDetails } = useSelector((store) => ({
+    ingredientDetails: store.ingredientDetails.ingredientDetails,
+  }));
+
+  const { modalIngredient, modalOrder } = useSelector((store) => ({
+    modalIngredient: store.modal.modalIngredient,
+    modalOrder: store.modal.modalOrder,
   }));
 
   useEffect(() => {
@@ -33,17 +32,25 @@ function App() {
   }, [dispatch]);
 
   const main = useMemo(() => {
-    return isLoading ? "loading" : <Main />;
-  }, [isLoading, ingredients]);
+    if (status !== "succes") {
+      return "loading...";
+    } else {
+      console.log(data)
+      const bun = data.filter((item) => item.type === "bun");
+      
+      dispatch(burgerConstructorActions.addBun(bun[0]));
+      return <Main />;
+    }
+  }, [status, data, dispatch]);
 
   return (
     <div className={stylesApp.app}>
       <AppHeader />
       {main}
-      <Modal active={activeModalIngr} title={"Детали ингредиента"}>
-        {isEmpty(details) && <IngredientDetails />}
+      <Modal active={modalIngredient} title={"Детали ингредиента"}>
+        {isEmpty(ingredientDetails) && <IngredientDetails />}
       </Modal>
-      <Modal active={activeModalOrder}>
+      <Modal active={modalOrder}>
         <OrderDetails />
       </Modal>
     </div>

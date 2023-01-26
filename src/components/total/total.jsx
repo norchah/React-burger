@@ -1,15 +1,15 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import totalStyles from "./total.module.css";
 import iconImagePath from "../../images/icon-36x36.svg";
 import { useSelector, useDispatch } from "react-redux";
-import { getNumberOfOrder } from "../../services/actions/burger-ingredients";
+import { getNumberOfOrder } from "../../services/slices/api/get-number-order";
 
 export default function Total() {
   const dispatch = useDispatch();
   const { total, orderList } = useSelector((store) => ({
-    total: store.start.totalPrice,
-    orderList: store.start.orderList,
+    total: store.burgerConstructor.totalPrice,
+    orderList: store.burgerConstructor.orderList,
   }));
 
   return (

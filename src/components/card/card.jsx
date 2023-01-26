@@ -4,15 +4,14 @@ import { Counter } from "@ya.praktikum/react-developer-burger-ui-components";
 import cardStyles from "./card.module.css";
 import PropTypes from "prop-types";
 import { useDispatch } from 'react-redux';
-import { OPEN_MODAL_INGR } from "../../services/actions/burger-ingredients";
 import { useDrag } from 'react-dnd';
+import { addIngredientDetails } from "../../services/slices/ingridient-details-slice";
+import { modalActions } from "../../services/slices/modal-slice";
  
 export default function Card({ value }) {
-  const { _id } = value;  
-
   const [{opacity}, dragRef] = useDrag({
     type: value.type === 'bun' ? 'bun' : ('main' || 'sauce'),
-    item: {_id},
+    item: {value},
     collect: monitor => ({
       opacity: monitor.isDragging() ? 0.2 : 1,
     })
@@ -27,10 +26,8 @@ export default function Card({ value }) {
         style={{opacity: opacity}}
         ref={dragRef}
         onClick={() => {
-          dispatch({
-            type: OPEN_MODAL_INGR,
-            item: value,
-          })
+          dispatch(modalActions.openModalIngredient());
+          dispatch(addIngredientDetails(value));
         }}
       >
         {value.__v === 0 ? '' : <Counter count={value.__v} size="default" extraClass="" />}

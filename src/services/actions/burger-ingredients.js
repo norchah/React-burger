@@ -33,7 +33,7 @@ export function getIngredients() {
         if (res.ok) {
           return res.json();
         }
-        return Promise.reject(`Err ${res.status}`);
+        return Promise.reject(`Error ${res.status}`);
       })
       .then((data) => {
         dispatch({

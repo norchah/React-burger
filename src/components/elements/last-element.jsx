@@ -3,7 +3,7 @@ import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-comp
 import styles from './list-elements.module.css';
 
 export default function LastElement(props) {
-    const item = props.value[0];
+    const item = props.value;
     return (
       <li key={item._id} className={styles.item}>
         <ConstructorElement

@@ -2,7 +2,8 @@ import React from "react";
 import PropTypes from 'prop-types';
 import modalStyles from "./modal.module.css";
 import { useDispatch } from 'react-redux';
-import { CLOSE_MODAL } from "../../services/actions/burger-ingredients";
+import { modalActions } from "../../services/slices/modal-slice";
+
 
 const ModalOverlay = ({ active, children }) => {
   const dispatch = useDispatch();
@@ -14,9 +15,7 @@ const ModalOverlay = ({ active, children }) => {
           : `${modalStyles.modal}`
       }
       onClick={() => {
-        dispatch({
-          type: CLOSE_MODAL
-        })
+        dispatch(modalActions.closeModal())
       }}
     >
       {children}

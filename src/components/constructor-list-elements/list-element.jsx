@@ -4,24 +4,17 @@ import FirstElement from "../elements/first-element";
 import LastElement from "../elements/last-element";
 import { MiddleElements } from "../elements/middle-elements";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  ADD_INGREDIENT,
-  INCREASE_ITEM,
-  ADD_BUN,
-  DEL_BUNS,
-  CLEAR_BUN_COUNT,
-  ADD_TOTAL,
-} from "../../services/actions/burger-ingredients";
 import { isEmpty } from "../../utils/data";
 import { useDrop } from "react-dnd";
 import { v4 as uuid } from "uuid";
+import { ingredientsActions } from "../../services/slices/ingredients-slice";
+import { burgerConstructorActions } from "../../services/slices/constructor-slice";
 
 export default function ListElements() {
   const dispatch = useDispatch();
-  const { bun, constructor, orderList } = useSelector((store) => ({
-    bun: store.start.bun,
-    constructor: store.start.constructor,
-    orderList: store.start.orderList,
+  const { bun, constructor } = useSelector((store) => ({
+    bun: store.burgerConstructor.bun,
+    constructor: store.burgerConstructor.burgerConstructor,
   }));
 
   const [{ isHover }, dropRef] = useDrop({
@@ -49,46 +42,32 @@ export default function ListElements() {
   const borderColor = isHover ? "blue" : "transparent";
   const borderColorBun = isHoverBun ? "blue" : "transparent";
 
-  function onDropHandlerBun(item) {
-    dispatch({
-      type: DEL_BUNS,
-    });
-    dispatch({
-      type: ADD_BUN,
-      ...item,
-    });
-    dispatch({
-      type: CLEAR_BUN_COUNT,
-    });
-    dispatch({
-      type: INCREASE_ITEM,
-      ...item,
-    });
+  function onDropHandlerBun({ value }) {
+    console.log(value._id);
+    dispatch(burgerConstructorActions.addBun(value));
+    dispatch(ingredientsActions.clearBunCount());
+    dispatch(ingredientsActions.increaseItem(value._id));
   }
 
-  function onDropHandler(item) {
-    dispatch({
-      type: ADD_INGREDIENT,
-      ...item,
-    });
-    dispatch({
-      type: INCREASE_ITEM,
-      ...item,
-    });
+  function onDropHandler({ value }) {
+    dispatch(burgerConstructorActions.addIngredient(value));
+    dispatch(ingredientsActions.increaseItem(value._id));
   }
 
   useEffect(() => {
-    let total = bun[0].price * 2;
-    let ingredientsIdTemp = [bun[0]._id];
+    //TODO: перенсти куда-то в отдельное место
+    let total = bun.price * 2;
+    let ingredientsIdTemp = [bun._id];
     constructor.map((item) => {
       total += item.price;
       ingredientsIdTemp.push(item._id);
     });
-    dispatch({
-      type: ADD_TOTAL,
-      orderList: ingredientsIdTemp,
-      totalPrice: total,
-    });
+    dispatch(
+      burgerConstructorActions.addTotal({
+        orderList: ingredientsIdTemp,
+        totalPrice: total,
+      })
+    );
   }, [constructor, bun, dispatch]);
 
   return (
