@@ -8,21 +8,16 @@ import OrderDetails from "../modal-order-details/order-details";
 import { isEmpty } from "../../utils/data.js";
 import { useSelector, useDispatch } from "react-redux";
 import { getIngredients } from "../../services/slices/api/get-ingredients";
-import { burgerConstructorActions } from "../../services/slices/constructor-slice";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Login from "../pages/login";
 
 function App() {
   const dispatch = useDispatch();
 
-  const { status, data } = useSelector((store) => ({
-    status: store.ingredients.status,
-    data: store.ingredients.ingredients,
-  }));
-
-  const { ingredientDetails } = useSelector((store) => ({
-    ingredientDetails: store.ingredientDetails.ingredientDetails,
-  }));
-
+  const { status } = useSelector((store) => store.ingredients.status);
+  const { ingredientDetails } = useSelector(
+    (store) => store.ingredientDetails.ingredientDetails
+  );
   const { modalIngredient, modalOrder } = useSelector((store) => ({
     modalIngredient: store.modal.modalIngredient,
     modalOrder: store.modal.modalOrder,
@@ -42,6 +37,7 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={main} />
+          <Route path="/login" element={<Login />} />
         </Routes>
         <Modal active={modalIngredient} title={"Детали ингредиента"}>
           {isEmpty(ingredientDetails) && <IngredientDetails />}
