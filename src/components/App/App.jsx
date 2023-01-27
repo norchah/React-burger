@@ -9,6 +9,7 @@ import { isEmpty } from "../../utils/data.js";
 import { useSelector, useDispatch } from "react-redux";
 import { getIngredients } from "../../services/slices/api/get-ingredients";
 import { burgerConstructorActions } from "../../services/slices/constructor-slice";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
   const dispatch = useDispatch();
@@ -32,27 +33,23 @@ function App() {
   }, [dispatch]);
 
   const main = useMemo(() => {
-    if (status !== "succes") {
-      return "loading...";
-    } else {
-      console.log(data)
-      const bun = data.filter((item) => item.type === "bun");
-      
-      dispatch(burgerConstructorActions.addBun(bun[0]));
-      return <Main />;
-    }
-  }, [status, data, dispatch]);
+    return status !== "succes" ? "loading..." : <Main />;
+  }, [status]);
 
   return (
     <div className={stylesApp.app}>
       <AppHeader />
-      {main}
-      <Modal active={modalIngredient} title={"Детали ингредиента"}>
-        {isEmpty(ingredientDetails) && <IngredientDetails />}
-      </Modal>
-      <Modal active={modalOrder}>
-        <OrderDetails />
-      </Modal>
+      <Router>
+        <Routes>
+          <Route path="/" element={main} />
+        </Routes>
+        <Modal active={modalIngredient} title={"Детали ингредиента"}>
+          {isEmpty(ingredientDetails) && <IngredientDetails />}
+        </Modal>
+        <Modal active={modalOrder}>
+          <OrderDetails />
+        </Modal>
+      </Router>
     </div>
   );
 }

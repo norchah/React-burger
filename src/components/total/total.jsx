@@ -27,7 +27,6 @@ export default function Total() {
         type="primary"
         size="large"
         onClick={() => {
-          console.log(orderList)
           dispatch(getNumberOfOrder(orderList));
         }}
       >

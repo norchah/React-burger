@@ -34,8 +34,8 @@ export default function ListElements() {
     collect: (monitor) => ({
       isHoverBun: monitor.isOver(),
     }),
-    drop(itemId) {
-      onDropHandlerBun(itemId);
+    drop(item) {
+      onDropHandlerBun(item);
     },
   });
 
@@ -43,7 +43,6 @@ export default function ListElements() {
   const borderColorBun = isHoverBun ? "blue" : "transparent";
 
   function onDropHandlerBun({ value }) {
-    console.log(value._id);
     dispatch(burgerConstructorActions.addBun(value));
     dispatch(ingredientsActions.clearBunCount());
     dispatch(ingredientsActions.increaseItem(value._id));

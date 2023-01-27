@@ -33,9 +33,18 @@ export const ingredientsSlice = createSlice({
         state.error = null;
       })
       .addCase(getIngredients.fulfilled, (state, action) => {
+        const data = action.payload.data;
+        const buns = data.filter(item => item.type === 'bun');
+        const bunIdForStartCount = buns[0]._id;
+
         state.status = "succes";
         state.error = null;
-        state.ingredients = action.payload.data;
+        state.ingredients = data;
+        
+        state.ingredients.map((item) =>
+        item._id === bunIdForStartCount ? (item.__v += 1) : item  //что бы при загрузке была единичка у булки, которая выбрана автоматически
+      );
+        
       })
       .addCase(getIngredients.rejected, (state, action) => {
         state.status = "error";

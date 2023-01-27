@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { getIngredients } from "./api/get-ingredients";
 
 export const burgerConstructorSlice = createSlice({
   name: "constructor",
@@ -10,6 +11,8 @@ export const burgerConstructorSlice = createSlice({
   },
   reducers: {
     addBun(state, action) {
+      console.log(action.payload)
+      state.bun = [];
       state.bun = action.payload;
     },
     addIngredient(state, action) {
@@ -31,6 +34,13 @@ export const burgerConstructorSlice = createSlice({
       state.totalPrice = action.payload.totalPrice;
     }
   },
+  extraReducers: (builder) => {
+    builder
+      .addCase(getIngredients.fulfilled, (state, action) => {
+        const buns = action.payload.data.filter(item => item.type === 'bun');
+        state.bun = buns[0];
+      })
+  }
 });
 
 export const { reducer: burgerConstructorReducer, actions: burgerConstructorActions } =
