@@ -1,0 +1,4 @@
+.link {
+    composes: link from '../link-constructor/link.module.css';
+    margin-left: 288px;
+}

@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getNumberOfOrder } from "./api/get-number-order";
+import { getNumberOfOrder } from "../api/get-number-order";
 
 export const modalSlice = createSlice({
   name: "modal",
