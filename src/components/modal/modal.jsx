@@ -7,15 +7,18 @@ import modalStyles from "./modal.module.css";
 import ModalOverlay from "../modal-overlay/modal-overlay";
 import { useDispatch } from "react-redux";
 import { modalActions } from "../../services/slices/modal-slice";
+import { useNavigate } from "react-router-dom";
 
 export default function Modal(props) {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const closeModal = modalActions.closeModal;
-  
+
   useEffect(() => {
     const handleCloseByEsc = (e) => {
       if (e.key === "Escape") {
         dispatch(closeModal());
+        navigate(-1)
       }
     };
     document.addEventListener("keydown", handleCloseByEsc);
@@ -36,9 +39,10 @@ export default function Modal(props) {
           </h2>
           <button
             className={modalStyles.button}
-            onClick={() =>
-              dispatch(closeModal())
-            }
+            onClick={() => {
+              dispatch(closeModal());
+              navigate(-1);
+            }}
           >
             <CloseIcon type="primary" />
           </button>

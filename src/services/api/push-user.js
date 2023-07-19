@@ -11,14 +11,6 @@ import {
 export const pushUser = createAsyncThunk(
   "auth/pushUser",
   async function ({ name, email, password }, { rejectWithValue }) {
-    console.log(name, email, password)
-    //---------------------------//
-    const body = JSON.stringify({
-      name: name,
-      email: email,
-      password: password,
-    });
-    //----------------------------//
     try {
       const res = await fetch(`${AUTH_URL}/user`, {
         method: `PATCH`,
@@ -26,7 +18,11 @@ export const pushUser = createAsyncThunk(
           "Content-Type": "application/json",
           authorization: accessTokenFromStorage,
         },
-        body: body,
+        body: JSON.stringify({
+          name: name,
+          email: email,
+          password: password,
+        }),
       });
       return await checkRes(res);
     } catch (error) {
@@ -43,7 +39,11 @@ export const pushUser = createAsyncThunk(
             "Content-Type": "application/json",
             authorization: accessTokenFromStorage,
           },
-          body: body,
+          body: JSON.stringify({
+            name: name,
+            email: email,
+            password: password,
+          }),
         });
         return await checkRes(res);
       }

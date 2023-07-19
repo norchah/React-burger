@@ -1,13 +1,19 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
-import { Navigate } from "react-router-dom";
+import { Navigate, useLocation } from "react-router-dom";
 
 export default function ProtectedRouteAuth({ element }) {
-  const { isAuth } = useSelector((store) => ({ isAuth: store.auth.isAuth }));
+  const { isAuth, status } = useSelector((store) => ({
+    isAuth: store.auth.isAuth,
+    status: store.auth.status,
+  }));
+  const location = useLocation();
 
   if (isAuth) {
-    return <Navigate to="/profile" />;
+    const { from } = location.state || { from: { pathname: "/" } };
+
+    return <Navigate to={from} />;
   }
 
-  return element;
+  return status !== "success" ? element : "Check auth...";
 }

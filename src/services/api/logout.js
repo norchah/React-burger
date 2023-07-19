@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { BASE_URL, refreshTokenFromStorage } from './utils';
+import { BASE_URL, refreshTokenFromStorage, REFRESH_TOKEN } from './utils';
 
 export const logout = createAsyncThunk(
   "auth/logout",
@@ -13,7 +13,7 @@ export const logout = createAsyncThunk(
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            token: refreshTokenFromStorage,
+            token: localStorage.getItem(REFRESH_TOKEN),
           }),
         }
       );

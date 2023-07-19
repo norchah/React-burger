@@ -8,7 +8,7 @@ import OrderDetails from "../modal-order-details/order-details";
 import { isEmpty } from "../../utils/data.js";
 import { useSelector, useDispatch } from "react-redux";
 import { getIngredients } from "../../services/api/get-ingredients";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
 import Login from "../pages/login";
 import Registration from "../pages/registration";
 import Profile from "../pages/profile";
@@ -24,14 +24,22 @@ import { accessTokenFromStorage } from "../../services/api/utils";
 
 function App() {
   const dispatch = useDispatch();
-  const status = useSelector((store) => store.ingredients.status);
-  const ingredientDetails = useSelector(
-    (store) => store.ingredientDetails.ingredientDetails
-  );
-  const { modalIngredient, modalOrder } = useSelector((store) => ({
-    modalIngredient: store.modal.modalIngredient,
-    modalOrder: store.modal.modalOrder,
-  }));
+  const location = useLocation();
+  const navigate = useNavigate();
+  const background = location.state && location.state.background;
+
+  const { modalIngredient, modalOrder, status, ingredientDetails } =
+    useSelector((store) => ({
+      status: store.ingredients.status,
+      modalIngredient: store.modal.modalIngredient,
+      modalOrder: store.modal.modalOrder,
+      ingredientDetails: store.ingredientDetails.ingredientDetails,
+    }));
+
+  // const handleClose = () => {
+  //   console.log('close')
+  //   navigate(-1);
+  // }
 
   useEffect(() => {
     dispatch(getIngredients());
@@ -46,43 +54,57 @@ function App() {
 
   return (
     <div className={stylesApp.app}>
-      <Router>
-        <AppHeader />
-        <Routes>
-          <Route path="/" element={main} />
-          <Route
-            path="/profile"
-            element={<ProtectedRouteNoAuth element={<Profile />} />}
-          />
-          <Route
-            path="/profile/orderList"
-            element={<ProtectedRouteNoAuth element={<OrderList />} />}
-          />
-          <Route
-            path="/profile/logout"
-            element={<ProtectedRouteNoAuth element={<Logout />} />}
-          />
+      <AppHeader />
+      <Routes location={background || location}>
+        <Route path="/" element={main} />
+        <Route
+          path="/profile"
+          element={<ProtectedRouteNoAuth element={<Profile />} />}
+        />
+        <Route
+          path="/profile/orderList"
+          element={<ProtectedRouteNoAuth element={<OrderList />} />}
+        />
+        <Route
+          path="/profile/logout"
+          element={<ProtectedRouteNoAuth element={<Logout />} />}
+        />
 
-          <Route path="/login" element={<Login />} />
+        <Route path="/login" element={<Login />} />
+        <Route
+          path="/registration"
+          element={<ProtectedRouteAuth element={<Registration />} />}
+        />
+        <Route
+          path="/forgotPassword"
+          element={<ProtectedRouteAuth element={<ForgotPassword />} />}
+        />
+        <Route path="/resetPassword" element={<ResetPassword />} />
+        <Route
+          path="/ingredients/:ingredientId"
+          element={<IngredientDetails />}
+        />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+      {background && (
+        <Routes>
           <Route
-            path="/registration"
-            element={<ProtectedRouteAuth element={<Registration />} />}
+            path="/ingredients/:ingredientId"
+            element={
+              <Modal
+                active={modalIngredient}
+                title={"Детали ингредиента"}
+                onClose={() => console.log("check")}
+              >
+                {isEmpty(ingredientDetails) && <IngredientDetails />}
+              </Modal>
+            }
           />
-          <Route
-            path="/forgotPassword"
-            element={<ProtectedRouteAuth element={<ForgotPassword />} />}
-          />
-          <Route path="/resetPassword" element={<ResetPassword />} />
-          {/* TODO: reset protect */}
-          <Route path="*" element={<NotFound />} />
         </Routes>
-        <Modal active={modalIngredient} title={"Детали ингредиента"}>
-          {isEmpty(ingredientDetails) && <IngredientDetails />}
-        </Modal>
-        <Modal active={modalOrder}>
-          <OrderDetails />
-        </Modal>
-      </Router>
+      )}
+      <Modal active={modalOrder}>
+        <OrderDetails />
+      </Modal>
     </div>
   );
 }

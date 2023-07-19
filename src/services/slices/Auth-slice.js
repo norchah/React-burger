@@ -25,7 +25,7 @@ export const authSlice = createSlice({
       state.isChangeUserFields = true;
     },
     cancelChangeUserFields(state) {
-      state.isChangeUserFields = false
+      state.isChangeUserFields = false;
       state.userName = state.user.name;
       state.userEmail = state.user.email;
     },
@@ -69,9 +69,6 @@ export const authSlice = createSlice({
         state.user = action.payload.user;
         const accessToken = action.payload.accessToken.split("Bearer ")[1];
         const refreshToken = action.payload.refreshToken;
-        console.log(action.payload);
-        console.log(accessToken);
-        console.log(refreshToken);
         if (accessToken && refreshToken) {
           localStorage.setItem(ACCESS_TOKEN, accessToken);
           localStorage.setItem(REFRESH_TOKEN, refreshToken);
@@ -103,19 +100,20 @@ export const authSlice = createSlice({
       })
       .addCase(logout.pending, (state) => {
         state.status = "loading";
-        state.password = "";
-        state.email = "";
-        state.userName = "";
-      })
-      .addCase(logout.rejected, (state, action) => {
-        state.error = action.payload;
-        state.status = "succes";
       })
       .addCase(logout.fulfilled, (state, action) => {
         state.status = "succes";
         state.isAuth = false;
         localStorage.removeItem(ACCESS_TOKEN);
         localStorage.removeItem(REFRESH_TOKEN);
+        state.password = "";
+        state.email = "";
+        state.userName = "";
+        state.user = {}
+      })
+      .addCase(logout.rejected, (state, action) => {
+        state.error = action.payload;
+        state.status = "succes";
       }),
 });
 

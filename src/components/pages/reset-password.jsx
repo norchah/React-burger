@@ -33,7 +33,8 @@ export function ResetPassword() {
     return <Navigate to="/forgotPassword" />;
   }
 
-  const onClick = async () => {
+  const onSubmit = async (e) => {
+    e.preventDefault();
     await dispatch(resetPassword({ password, token }));
     await navigate("/login");
   };
@@ -43,7 +44,7 @@ export function ResetPassword() {
       <h2 className={`${styles.title} text text_type_main-medium`}>
         Восстановление пароля
       </h2>
-      <form className={`${styles.form} mt-6`}>
+      <form className={`${styles.form} mt-6`} onSubmit={onSubmit}>
         <PasswordInput
           onChange={onChange}
           placeholder="Введите новый пароль"
@@ -59,11 +60,11 @@ export function ResetPassword() {
           extraClass="mb-6"
         />
         <Button
-          htmlType="button"
+          htmlType="Submit "
           type="primary"
           size="large"
           style={{ justifySelf: "center" }}
-          onClick={onClick}
+          onSubmit={onSubmit}
         >
           <span className="text text_type_main-default">Сохранить</span>
         </Button>

@@ -11,14 +11,13 @@ export const checkRes = (res) => {
 };
 
 export const refreshToken = async () => {
-  console.log(refreshTokenFromStorage);
   return fetch(`${AUTH_URL}/token`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      token: refreshTokenFromStorage,
+      token: localStorage.getItem(REFRESH_TOKEN),
     }),
-  }).then(checkRes);
+  }).then(res => console.log(res));
 };

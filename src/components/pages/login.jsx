@@ -30,8 +30,9 @@ export default function Login() {
       dispatch(authActions.addUserPassword(value));
     }
   };
-  const onClick = () => {
-    dispatch(authorization({email, password}));
+  const onSubmit = (e) => {
+    e.preventDefault();
+    dispatch(authorization({ email, password }));
   };
 
   useEffect(() => {
@@ -43,7 +44,7 @@ export default function Login() {
   return (
     <section className={styles.section}>
       <h2 className={`${styles.title} text text_type_main-medium`}>Вход</h2>
-      <form className={`${styles.form} mt-6`}>
+      <form className={`${styles.form} mt-6`} onSubmit={onSubmit}>
         <EmailInput
           onChange={onChange}
           value={email}
@@ -57,14 +58,19 @@ export default function Login() {
           name={"password"}
           extraClass="mb-6"
         />
-        <Button htmlType="button" type="primary" size="large" onClick={onClick}>
+        <Button
+          htmlType="Submit"
+          type="primary"
+          size="large"
+          onSubmit={onSubmit}
+        >
           <span className="text text_type_main-default">Войти</span>
         </Button>
         <p
           className={`${styles.paragraph} text text_type_main-default text_color_inactive mt-20`}
         >
           Вы — новый пользователь?{" "}
-          <Button //как бы не хотелось сделать link, ui-kit не предоставил такую возможность
+          <Button
             htmlType="button"
             type="secondary"
             size="medium"

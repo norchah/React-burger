@@ -3,8 +3,9 @@ import { useSelector } from "react-redux";
 import { useLocation, Navigate } from "react-router-dom";
 
 export default function ProtectedRouteNoAuth({ element }) {
-  const { isAuth } = useSelector((store) => ({
+  const { isAuth, status } = useSelector((store) => ({
     isAuth: store.auth.isAuth,
+    status: store.auth.status,
   }));
   const location = useLocation();
 
@@ -12,5 +13,5 @@ export default function ProtectedRouteNoAuth({ element }) {
     return <Navigate to="/login" state={{ from: location }} />;
   }
 
-  return element;
+  return status === "succes" ? element : "Check auth..";
 }

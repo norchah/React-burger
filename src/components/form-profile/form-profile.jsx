@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styles from "./form-profile.module.css";
 import {
   EmailInput,
@@ -8,7 +8,6 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDispatch, useSelector } from "react-redux";
 import { authActions } from "../../services/slices/Auth-slice";
-import { getUser } from "../../services/api/get-user";
 import { pushUser } from "../../services/api/push-user";
 
 export function FormProfile() {
@@ -44,10 +43,6 @@ export function FormProfile() {
     await dispatch(pushUser({ name, email, password }));
     await dispatch(authActions.cancelChangeUserFields());
   };
-
-  useEffect(() => {
-    getUser();
-  }, []);
 
   return (
     <form className={`${styles.form} mt-6`}>

@@ -33,24 +33,17 @@ export default function Registration() {
     }
   };
 
-  const onClick = () => {
-    dispatch(registration({ email, password, name  }));
+  const onSubmit = (e) => {
+    e.preventDefault();
+    dispatch(registration({ email, password, name }));
   };
 
-  useEffect(() => {
-    if (isAuth) {
-      navigate("/");
-    }
-  }, [isAuth]);
-
   return (
-    <section
-      className={styles.section}
-    >
+    <section className={styles.section}>
       <h2 className={`${styles.title} text text_type_main-medium mb-6`}>
         Регистрация
       </h2>
-      <form className={styles.form}>
+      <form type="submit" className={styles.form} onSubmit={onSubmit}>
         <EmailInput
           onChange={onChange}
           value={email}
@@ -73,7 +66,12 @@ export default function Registration() {
           size={"default"}
           extraClass="mb-6"
         />
-        <Button htmlType="button" type="primary" size="large" onClick={onClick}>
+        <Button
+          htmlType="submit"
+          type="primary"
+          size="large"
+          onSubmit={onSubmit}
+        >
           <span className="text text_type_main-default">
             {status !== "loading" ? "Зарегистрироваться" : "loading"}
           </span>

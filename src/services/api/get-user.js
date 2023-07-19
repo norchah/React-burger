@@ -6,7 +6,6 @@ import {
   ACCESS_TOKEN,
   REFRESH_TOKEN,
   accessTokenFromStorage,
-  contentType,
 } from "./utils";
 
 export const getUser = createAsyncThunk(
@@ -24,7 +23,6 @@ export const getUser = createAsyncThunk(
     } catch (error) {
       if (error.message === "jwt expired") {
         const refreshData = refreshToken();
-        console.log(refreshData);
         if (!refreshData.ok) {
           return Promise.reject(refreshData);
         }

@@ -23,7 +23,8 @@ export function ForgotPassword() {
     dispatch(passwordActions.addEmail(value))
   };
 
-  const onClick = async () => {
+  const onSubmit = async (e) => {
+    e.preventDefault();
     await dispatch(sendEmail({ email }));
     await navigate("/resetPassword");
   };
@@ -37,7 +38,7 @@ export function ForgotPassword() {
       <h2 className={`${styles.title} text text_type_main-medium`}>
         Восстановление пароля
       </h2>
-      <form className={`${styles.form} mt-6`}>
+      <form className={`${styles.form} mt-6`} onSubmit={onSubmit}>
         <EmailInput
           onChange={onChange}
           placeholder="Укажите e-mail"
@@ -47,11 +48,11 @@ export function ForgotPassword() {
           extraClass="mb-6"
         />
         <Button
-          htmlType="button"
+          htmlType="Submit"
           type="primary"
           size="large"
           style={{ justifySelf: "center" }}
-          onClick={onClick}
+          onSubmit={onSubmit}
         >
           <span className="text text_type_main-default">{buttonText}</span>
         </Button>
