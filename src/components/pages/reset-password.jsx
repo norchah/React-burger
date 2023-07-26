@@ -9,6 +9,7 @@ import { useNavigate, Navigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { passwordActions } from "../../services/slices/password-slice";
 import { resetPassword } from "../../services/api/reset-password";
+import { PATH_FORGOT_PASSWORD, PATH_LOGIN } from "../../utils/paths";
 
 export function ResetPassword() {
   const navigate = useNavigate();
@@ -30,13 +31,13 @@ export function ResetPassword() {
   };
 
   if (!isSentEmail) {
-    return <Navigate to="/forgotPassword" />;
+    return <Navigate to={PATH_FORGOT_PASSWORD} />;
   }
 
   const onSubmit = async (e) => {
     e.preventDefault();
     await dispatch(resetPassword({ password, token }));
-    await navigate("/login");
+    await navigate(PATH_LOGIN);
   };
 
   return (
@@ -60,7 +61,7 @@ export function ResetPassword() {
           extraClass="mb-6"
         />
         <Button
-          htmlType="Submit "
+          htmlType="submit "
           type="primary"
           size="large"
           style={{ justifySelf: "center" }}
@@ -77,7 +78,7 @@ export function ResetPassword() {
             type="secondary"
             size="medium"
             style={{ margin: "0", padding: "0" }}
-            onClick={() => navigate("/login")}
+            onClick={() => navigate(PATH_LOGIN)}
           >
             Войти
           </Button>

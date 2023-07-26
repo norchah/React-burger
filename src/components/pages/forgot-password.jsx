@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { passwordActions } from "../../services/slices/password-slice";
 import { sendEmail } from "../../services/api/send-email";
+import { PATH_LOGIN, PATH_RESET_PASSWORD } from "../../utils/paths";
 
 export function ForgotPassword() {
   const navigate = useNavigate();
@@ -26,7 +27,7 @@ export function ForgotPassword() {
   const onSubmit = async (e) => {
     e.preventDefault();
     await dispatch(sendEmail({ email }));
-    await navigate("/resetPassword");
+    await navigate(PATH_RESET_PASSWORD);
   };
 
   const buttonText = useMemo(() => {
@@ -48,7 +49,7 @@ export function ForgotPassword() {
           extraClass="mb-6"
         />
         <Button
-          htmlType="Submit"
+          htmlType="submit"
           type="primary"
           size="large"
           style={{ justifySelf: "center" }}
@@ -65,7 +66,7 @@ export function ForgotPassword() {
             type="secondary"
             size="medium"
             style={{ margin: "0", padding: "0" }}
-            onClick={() => navigate("/login")}
+            onClick={() => navigate(PATH_LOGIN)}
           >
             Войти
           </Button>

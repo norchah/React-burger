@@ -9,11 +9,18 @@ import { authActions } from "../../services/slices/Auth-slice";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import { authorization } from "../../services/api/authorization";
+import { PATH_FORGOT_PASSWORD, PATH_REGISTRATION } from "../../utils/paths";
+import { getAuth } from "../../utils/stores";
+import { useForm } from "../../hooks/useForm";
 
 export default function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
+
+  // const {values, handleChange, setValues} = useForm({values});
+
+
   const { email, password, isAuth } = useSelector((store) => ({
     email: store.auth.userEmail,
     password: store.auth.userPassword,
@@ -59,7 +66,7 @@ export default function Login() {
           extraClass="mb-6"
         />
         <Button
-          htmlType="Submit"
+          htmlType="submit"
           type="primary"
           size="large"
           onSubmit={onSubmit}
@@ -75,7 +82,7 @@ export default function Login() {
             type="secondary"
             size="medium"
             style={{ margin: "0", padding: "0" }}
-            onClick={() => navigate("/registration")}
+            onClick={() => navigate(PATH_REGISTRATION)}
           >
             Зарегистрироваться
           </Button>
@@ -89,7 +96,7 @@ export default function Login() {
             type="secondary"
             size="medium"
             style={{ margin: "0", padding: "0" }}
-            onClick={() => navigate("/forgotPassword")}
+            onClick={() => navigate(PATH_FORGOT_PASSWORD)}
           >
             Восстановить пароль
           </Button>

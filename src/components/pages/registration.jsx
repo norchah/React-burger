@@ -10,16 +10,21 @@ import { useSelector, useDispatch } from "react-redux";
 import { authActions } from "../../services/slices/Auth-slice";
 import { useNavigate } from "react-router-dom";
 import { registration } from "../../services/api/registration";
+import { PATH_LOGIN } from "../../utils/paths";
+import { useForm } from '../../hooks/useForm';
 
 export default function Registration() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { name, email, password, status, isAuth } = useSelector((store) => ({
+
+  // const {values, handleChange, setValues} = useForm({});
+
+
+  const { name, email, password, status } = useSelector((store) => ({
     email: store.auth.userEmail,
     password: store.auth.userPassword,
     name: store.auth.userName,
     status: store.auth.status,
-    isAuth: store.auth.isAuth,
   }));
   const onChange = (e) => {
     const field = e.target.name;
@@ -85,7 +90,7 @@ export default function Registration() {
             type="secondary"
             size="medium"
             style={{ margin: "0", padding: "0" }}
-            onClick={() => navigate("/login")}
+            onClick={() => navigate(PATH_LOGIN)}
           >
             Войти
           </Button>

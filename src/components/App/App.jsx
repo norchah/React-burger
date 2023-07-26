@@ -8,24 +8,33 @@ import OrderDetails from "../modal-order-details/order-details";
 import { isEmpty } from "../../utils/data.js";
 import { useSelector, useDispatch } from "react-redux";
 import { getIngredients } from "../../services/api/get-ingredients";
-import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import Login from "../pages/login";
 import Registration from "../pages/registration";
 import Profile from "../pages/profile";
 import { ForgotPassword } from "../pages/forgot-password";
 import { ResetPassword } from "../pages/reset-password";
 import { NotFound } from "../pages/not-found";
-import ProtectedRouteNoAuth from "../protected-routes/protected-route-no-auth";
-import ProtectedRouteAuth from "../protected-routes/protected-route-auth";
+import { ForAuthUser, ForUnAuthUser } from "../protected-routes/protected-route";
+
 import { Logout } from "../pages/logout";
 import { OrderList } from "../pages/order-list";
 import { getUser } from "../../services/api/get-user";
 import { accessTokenFromStorage } from "../../services/api/utils";
+import {
+  PATH_PROFILE,
+  PATH_ORDER_LIST,
+  PATH_LOGIN,
+  PATH_LOGOUT,
+  PATH_REGISTRATION,
+  PATH_FORGOT_PASSWORD,
+  PATH_RESET_PASSWORD,
+  PATH_INGREDIENT_ID,
+} from "../../utils/paths";
 
 function App() {
   const dispatch = useDispatch();
   const location = useLocation();
-  const navigate = useNavigate();
   const background = location.state && location.state.background;
 
   const { modalIngredient, modalOrder, status, ingredientDetails } =
@@ -36,77 +45,79 @@ function App() {
       ingredientDetails: store.ingredientDetails.ingredientDetails,
     }));
 
-  // const handleClose = () => {
-  //   console.log('close')
-  //   navigate(-1);
-  // }
-
   useEffect(() => {
     dispatch(getIngredients());
-    if (accessTokenFromStorage) {
-      dispatch(getUser());
-    }
+    dispatch(getUser());
   }, []);
 
-  const main = useMemo(() => {
-    return status !== "succes" ? "loading..." : <Main />;
-  }, [status]);
-
-  return (
-    <div className={stylesApp.app}>
-      <AppHeader />
-      <Routes location={background || location}>
-        <Route path="/" element={main} />
-        <Route
-          path="/profile"
-          element={<ProtectedRouteNoAuth element={<Profile />} />}
-        />
-        <Route
-          path="/profile/orderList"
-          element={<ProtectedRouteNoAuth element={<OrderList />} />}
-        />
-        <Route
-          path="/profile/logout"
-          element={<ProtectedRouteNoAuth element={<Logout />} />}
-        />
-
-        <Route path="/login" element={<Login />} />
-        <Route
-          path="/registration"
-          element={<ProtectedRouteAuth element={<Registration />} />}
-        />
-        <Route
-          path="/forgotPassword"
-          element={<ProtectedRouteAuth element={<ForgotPassword />} />}
-        />
-        <Route path="/resetPassword" element={<ResetPassword />} />
-        <Route
-          path="/ingredients/:ingredientId"
-          element={<IngredientDetails />}
-        />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-      {background && (
-        <Routes>
+  const app = useMemo(() => {
+    return status !== "succes" ? (
+      "loading..."
+    ) : (
+      <div className={stylesApp.app}>
+        <AppHeader />
+        <Routes location={background || location}>
+          <Route path="/" element={<Main />} />
           <Route
-            path="/ingredients/:ingredientId"
+            path={PATH_PROFILE}
             element={
-              <Modal
-                active={modalIngredient}
-                title={"Детали ингредиента"}
-                onClose={() => console.log("check")}
-              >
-                {isEmpty(ingredientDetails) && <IngredientDetails />}
-              </Modal>
+              <ForAuthUser element={<Profile />} />
             }
           />
+          <Route
+            path={PATH_ORDER_LIST}
+            element={<ForAuthUser element={<OrderList />} />}
+          />
+          <Route
+            path={PATH_LOGOUT}
+            element={<ForAuthUser element={<Logout />} />}
+          />
+
+          <Route
+            path={PATH_LOGIN}
+            element={
+              <ForUnAuthUser element={<Login />} />
+            }
+          />
+          <Route
+            path={PATH_REGISTRATION}
+            element={
+              <ForUnAuthUser element={<Registration />} />
+            }
+          />
+          <Route
+            path={PATH_FORGOT_PASSWORD}
+            element={
+              <ForUnAuthUser
+                routeForUnAuth={true}
+                element={<ForgotPassword />}
+              />
+            }
+          />
+          <Route path={PATH_RESET_PASSWORD} element={<ResetPassword />} />
+          <Route path={PATH_INGREDIENT_ID} element={<IngredientDetails />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
-      )}
-      <Modal active={modalOrder}>
-        <OrderDetails />
-      </Modal>
-    </div>
-  );
+        {background && (
+          <Routes>
+            <Route
+              path={PATH_INGREDIENT_ID}
+              element={
+                <Modal active={modalIngredient} title={"Детали ингредиента"}>
+                  {isEmpty(ingredientDetails) && <IngredientDetails />}
+                </Modal>
+              }
+            />
+          </Routes>
+        )}
+        <Modal active={modalOrder}>
+          <OrderDetails />
+        </Modal>
+      </div>
+    );
+  });
+
+  return status && app;
 }
 
 export default App;

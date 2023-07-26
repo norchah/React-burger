@@ -27,15 +27,15 @@ export default function Card({ value }) {
       key={ingredientId}
       to={`ingredients/${ingredientId}`}
       state={{ background: location }}
+      onClick={() => {
+        dispatch(modalActions.openModalIngredient());
+        dispatch(addIngredientDetails(value));
+      }}
     >
       <article
         className={`${cardStyles.card} pb-8`}
         style={{ opacity: opacity }}
         ref={dragRef}
-        onClick={() => {
-          dispatch(modalActions.openModalIngredient());
-          dispatch(addIngredientDetails(value));
-        }}
       >
         {value.__v === 0 ? (
           ""

@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { AUTH_URL, contentType } from "./utils";
+import { AUTH_URL } from "./utils";
 
 export const authorization = createAsyncThunk(
   "auth/authorization",
