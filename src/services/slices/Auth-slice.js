@@ -97,7 +97,7 @@ export const authSlice = createSlice({
         state.status = "succes";
         state.isAuth = false;
         state.error = action.payload.error;
-        console.log(action.payload)
+        console.log(action.payload);
       })
       .addCase(logout.pending, (state) => {
         state.status = "loading";
@@ -110,7 +110,7 @@ export const authSlice = createSlice({
         state.password = "";
         state.email = "";
         state.userName = "";
-        state.user = {}
+        state.user = {};
       })
       .addCase(logout.rejected, (state, action) => {
         state.error = action.payload;

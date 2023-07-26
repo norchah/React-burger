@@ -12,11 +12,9 @@ export const getUser = createAsyncThunk(
           authorization: accessTokenFromStorage,
         },
       }).then(data => {
-        console.log(data);
         return data
       })
     } catch (error) {
-      console.log(error.message)
       return rejectWithValue(error.message);
     }
   }

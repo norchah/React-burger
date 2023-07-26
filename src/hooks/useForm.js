@@ -10,3 +10,5 @@ export function useForm(inputValues) {
   };
   return { values, handleChange, setValues };
 }
+
+// не совсем разобрался как использовать в компонентах с инпутами
