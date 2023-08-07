@@ -1,16 +1,27 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import totalStyles from "./total.module.css";
 import iconImagePath from "../../images/icon-36x36.svg";
 import { useSelector, useDispatch } from "react-redux";
-import { getNumberOfOrder } from "../../services/actions/burger-ingredients";
+import { getNumberOfOrder } from "../../services/api/get-number-order";
+import { useNavigate } from "react-router-dom";
 
 export default function Total() {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { total, orderList } = useSelector((store) => ({
-    total: store.start.totalPrice,
-    orderList: store.start.orderList,
+  const { total, orderList, isAuth } = useSelector((store) => ({
+    total: store.burgerConstructor.totalPrice,
+    orderList: store.burgerConstructor.orderList,
+    isAuth: store.auth.isAuth,
   }));
+
+  const onClick = () => {
+    if(isAuth) {
+      dispatch(getNumberOfOrder(orderList))
+    } else {
+      navigate("/login");
+    }
+  }
 
   return (
     <div className={`${totalStyles.total} mt-10`}>
@@ -26,10 +37,7 @@ export default function Total() {
         htmlType="button"
         type="primary"
         size="large"
-        onClick={() => {
-          console.log(orderList)
-          dispatch(getNumberOfOrder(orderList));
-        }}
+        onClick={onClick}
       >
         Оформить заказ
       </Button>

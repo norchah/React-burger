@@ -6,23 +6,26 @@ import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import modalStyles from "./modal.module.css";
 import ModalOverlay from "../modal-overlay/modal-overlay";
 import { useDispatch } from "react-redux";
-import { CLOSE_MODAL } from "../../services/actions/burger-ingredients";
+import { modalActions } from "../../services/slices/modal-slice";
+import { useNavigate } from "react-router-dom";
 
 export default function Modal(props) {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
+  const closeModal = modalActions.closeModal;
+
   useEffect(() => {
     const handleCloseByEsc = (e) => {
       if (e.key === "Escape") {
-        dispatch({
-          type: CLOSE_MODAL,
-        });
+        dispatch(closeModal());
+        navigate(-1)
       }
     };
     document.addEventListener("keydown", handleCloseByEsc);
     return () => {
       document.removeEventListener("keydown", handleCloseByEsc);
     };
-  }, [dispatch]);
+  }, [dispatch, closeModal]);
 
   return createPortal(
     <ModalOverlay active={props.active}>
@@ -36,11 +39,10 @@ export default function Modal(props) {
           </h2>
           <button
             className={modalStyles.button}
-            onClick={() =>
-              dispatch({
-                type: CLOSE_MODAL,
-              })
-            }
+            onClick={() => {
+              dispatch(closeModal());
+              navigate(-1);
+            }}
           >
             <CloseIcon type="primary" />
           </button>

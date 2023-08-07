@@ -1,16 +1,16 @@
 import React from "react";
-import ButtonConstructor from "../button-constructor/button-constructor.jsx";
-import ButtonOrderList from "../button-order-list/button-orderr-list.jsx";
+import LinkConstructor from "../link-constructor/link-constructor.jsx";
+import LinkOrderList from "../link-order-list/link-orderr-list.jsx";
 import styles from "./nav.module.css";
 
 export default function Nav() {
   return (
     <ul className={styles.list}>
       <li className="mr-2">
-        <ButtonConstructor>Конструктор</ButtonConstructor>
+        <LinkConstructor>Конструктор</LinkConstructor>
       </li>
       <li className="">
-        <ButtonOrderList>Лента заказов</ButtonOrderList>
+        <LinkOrderList>Лента заказов</LinkOrderList>
       </li>
     </ul>
   );

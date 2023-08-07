@@ -1,9 +1,16 @@
-.button {
+.link {
     display: flex;
     align-items: center;
     height: 56px;
     box-sizing: border-box;
-    border: none;
     background-color: inherit;
-    color: inherit;
+    text-decoration: none;
+}
+
+.link:hover {
+    cursor: pointer;
+}
+
+.link:visited {
+    color: white;
 }

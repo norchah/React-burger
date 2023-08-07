@@ -4,7 +4,7 @@ import style from "./style.module.css";
 import { useSelector, } from "react-redux";
 
 export default function Switcher() {
-  const current = useSelector((store) => store.start.currentTab);
+  const current = useSelector((store) => store.switcher.currentTab);
 //scrollInToView !!!
   return (
     <div className={style.container}>

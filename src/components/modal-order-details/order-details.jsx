@@ -5,8 +5,8 @@ import { useSelector } from "react-redux";
 
 export default function OrderDetails() {
   const { numberOfOrder, error } = useSelector((store) => ({
-    numberOfOrder: store.start.numberOfOrder,
-    error: store.start.numberError,
+    numberOfOrder: store.modal.numberOfOrder,
+    error: store.modal.error,
   }));
   return (
     <main className={stylesOrder.container}>
@@ -14,7 +14,7 @@ export default function OrderDetails() {
         {numberOfOrder ? numberOfOrder : error}
       </h2>
       <p className="text text_type_main-medium mt-8">идентификатор заказа</p>
-      <img className="mt-15" src={done}></img>
+      <img className="mt-15" src={done} alt='ingredient'></img>
       <p className="text text_type_main-small mt-15">
         Ваш заказ начали готовить
       </p>
