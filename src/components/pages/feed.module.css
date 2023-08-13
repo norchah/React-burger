@@ -1,0 +1,11 @@
+.section {
+    overflow: hidden;
+    display: flex;
+}
+
+.container {
+    width: 1320px;
+    margin: 0 auto;
+    height: 912px;
+    box-sizing: border-box;
+}

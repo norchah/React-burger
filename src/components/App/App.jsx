@@ -15,12 +15,14 @@ import Profile from "../pages/profile";
 import { ForgotPassword } from "../pages/forgot-password";
 import { ResetPassword } from "../pages/reset-password";
 import { NotFound } from "../pages/not-found";
-import { ForAuthUser, ForUnAuthUser } from "../protected-routes/protected-route";
-
+import {
+  ForAuthUser,
+  ForUnAuthUser,
+} from "../protected-routes/protected-route";
+import Feed from "../pages/feed";
 import { Logout } from "../pages/logout";
-import { OrderList } from "../pages/order-list";
+import { ProfileOrderList } from "../pages/order-list";
 import { getUser } from "../../services/api/get-user";
-import { accessTokenFromStorage } from "../../services/api/utils";
 import {
   PATH_PROFILE,
   PATH_ORDER_LIST,
@@ -30,7 +32,11 @@ import {
   PATH_FORGOT_PASSWORD,
   PATH_RESET_PASSWORD,
   PATH_INGREDIENT_ID,
+  PATH_FEED,
+  PATH_FEED_ID,
+  PATH_ORDER_LIST_ID,
 } from "../../utils/paths";
+import { WSActions } from "../../services/slices/Ws-slice";
 
 function App() {
   const dispatch = useDispatch();
@@ -48,6 +54,16 @@ function App() {
   useEffect(() => {
     dispatch(getIngredients());
     dispatch(getUser());
+    const wsFeed = new WebSocket("wss://norma.nomoreparties.space/orders/all");
+    wsFeed.onmessage = (event) => {
+      const data = JSON.parse(event.data);
+      dispatch(WSActions.addDataFeed(data));
+    };
+    const wsOrderlist = new WebSocket(`wss://norma.nomoreparties.space/orders?token=${localStorage.getItem("accessToken")}`);
+    wsOrderlist.onmessage = (event) => {
+      const data = JSON.parse(event.data);
+      dispatch(WSActions.addDataOrderList(data))
+    }
   }, []);
 
   const app = useMemo(() => {
@@ -60,13 +76,15 @@ function App() {
           <Route path="/" element={<Main />} />
           <Route
             path={PATH_PROFILE}
-            element={
-              <ForAuthUser element={<Profile />} />
-            }
+            element={<ForAuthUser element={<Profile />} />}
           />
           <Route
             path={PATH_ORDER_LIST}
-            element={<ForAuthUser element={<OrderList />} />}
+            element={<ForAuthUser element={<ProfileOrderList />} />}
+          />
+          <Route
+            path={PATH_ORDER_LIST_ID}
+            element={<ForAuthUser element={<ProfileOrderList />} />}
           />
           <Route
             path={PATH_LOGOUT}
@@ -75,15 +93,16 @@ function App() {
 
           <Route
             path={PATH_LOGIN}
-            element={
-              <ForUnAuthUser element={<Login />} />
-            }
+            element={<ForUnAuthUser element={<Login />} />}
+          />
+          <Route path={PATH_FEED} element={<Feed />} />
+          <Route
+            path={PATH_FEED_ID}
+            element={<ForUnAuthUser element={<Login />} />}
           />
           <Route
             path={PATH_REGISTRATION}
-            element={
-              <ForUnAuthUser element={<Registration />} />
-            }
+            element={<ForUnAuthUser element={<Registration />} />}
           />
           <Route
             path={PATH_FORGOT_PASSWORD}
