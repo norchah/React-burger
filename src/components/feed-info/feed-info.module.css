@@ -1,0 +1,20 @@
+.section {
+    width: 580px;
+    display: flex;
+    flex-direction: column;
+}
+
+.list {
+    width: 280px;
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+.color {
+    color: #0CC;
+}
+
+.table {
+display: flex;
+}

@@ -6,6 +6,7 @@ import { burgerConstructorReducer } from "./constructor-slice";
 import { switcherReducer } from "./swither-slice";
 import { authReducer } from "./Auth-slice";
 import { passwordReducer } from "./password-slice";
+import { WSReducer } from "./Ws-slice";
 
 export const store = configureStore({
   reducer: {
@@ -16,5 +17,6 @@ export const store = configureStore({
     switcher: switcherReducer,
     auth: authReducer,
     password: passwordReducer,
+    WS: WSReducer,
   },
 });

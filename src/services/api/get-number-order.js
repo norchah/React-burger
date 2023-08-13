@@ -1,5 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { BASE_URL } from "./utils";
+import { accessTokenFromStorage } from "./utils";
 
 export const getNumberOfOrder = createAsyncThunk(
   "modal/getNumberOfOrder",
@@ -9,6 +10,7 @@ export const getNumberOfOrder = createAsyncThunk(
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          authorization: accessTokenFromStorage,
         },
         body: JSON.stringify({
           ingredients: ingredientsList,
